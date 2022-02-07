@@ -1,0 +1,535 @@
+﻿@model NerolacPreviewApp.Models.TSOProject
+
+@{
+    ViewBag.Title = "NewRequestRegistration";
+}
+
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+</style>
+
+@using (Html.BeginForm("NewRequestRegistration", "TSO", FormMethod.Post, new { id = "CreateForm", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <h2 style="color:red;font-weight:bold;font-size:20px;">
+                MyViz2 -  New Project Registration (By TSO)
+            </h2>
+            <h2 style="color:darkblue;font-weight:bold;font-size:15px;">
+                (Fill in the following details - to register a new Preview Work)
+            </h2>
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProjectID)
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.ProjectName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control",@placeholder = "ProjectName" } })
+                    @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+                @Html.LabelFor(model => model.ProjectValue, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.ProjectValue, new { htmlAttributes = new { @class = "form-control", @placeholder = "ProjectValue" } })
+                    @Html.ValidationMessageFor(model => model.ProjectValue, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.SiteAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.SiteAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "SiteAddress" } })
+                    @Html.ValidationMessageFor(model => model.SiteAddress, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @placeholder = "Location" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.VizOption, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.VizOption, ViewBag.VizOptions as IEnumerable<SelectListItem>, "Select Options", new { @class = "form-control", style = "width:300px;" })
+                    @Html.ValidationMessageFor(model => model.VizOption, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+                @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control", @Value = "N", @placeholder = "Priority" } })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.IorEorMS, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.IorEorMS, ViewBag.IorEorMS as IEnumerable<SelectListItem>, "Select Options", new { @class = "form-control", style = "width:300px;" })
+                    @Html.ValidationMessageFor(model => model.IorEorMS, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+
+                @{
+                    List<SelectListItem> FreshPaintings = new List<SelectListItem>();
+                    FreshPaintings.Add(new SelectListItem
+                    {
+                        Text = "Select Option",
+                        Value = "Select Option",
+                        Selected = true
+                    });
+                    FreshPaintings.Add(new SelectListItem
+                    {
+                        Text = "Fresh",
+                        Value = "Y"
+                    });
+                    FreshPaintings.Add(new SelectListItem
+                    {
+                        Text = "Repainting",
+                        Value = "N"
+                    });
+                }
+                @Html.LabelFor(model => model.FreshPainting, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.FreshPainting, FreshPaintings, new { @class = "form-control", style = "width:300px;" })
+                    @Html.ValidationMessageFor(model => model.FreshPainting, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "CustomerName" } })
+                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+                @Html.LabelFor(model => model.CustomerContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CustomerContactNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "CustomerContactNo" } })
+                    @Html.ValidationMessageFor(model => model.CustomerContactNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.CustomerEMailId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CustomerEMailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "CustomerEMailId" } })
+                    @Html.ValidationMessageFor(model => model.CustomerEMailId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.DealerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.DealerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "DealerName" } })
+                    @Html.ValidationMessageFor(model => model.DealerName, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(model => model.DealerSAPCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.DealerSAPCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "DealerSAPCode" } })
+                    @Html.ValidationMessageFor(model => model.DealerSAPCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.ImageFileName1, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.ImageFile1, new { @class = "form-control", type = "file", @placeholder = "ImageFile1" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg1" style="color:red;font-size:15px;font-weight:bold;">Duplicate and gif image is not allowed</Label>
+                    @Html.ValidationMessageFor(model => model.ImageFile1, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+                @Html.LabelFor(model => model.ImageFileName2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.ImageFile2, new { @class = "form-control", type = "file", @placeholder = "ImageFile2" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg2" style="color:red;font-size:15px;font-weight:bold;">Duplicate and gif image  is not allowed</Label>
+                    @Html.ValidationMessageFor(model => model.ImageFile2, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.ImageFileName3, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.ImageFile3, new { @class = "form-control", type = "file", @placeholder = "ImageFile3" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg3" style="color:red;font-size:15px;font-weight:bold;">Duplicate  and gif image is not allowed</Label>
+                    @Html.ValidationMessageFor(model => model.ImageFile3, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+                @Html.LabelFor(model => model.CPSplRequest, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CPSplRequest, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPSplRequest" } })
+                    @Html.ValidationMessageFor(model => model.CPSplRequest, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" id="pan1">
+            <div class="container">
+                <div class="row" id="0">
+                    <table class="form-group col-xs-2" style="margin-left:5px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.Label("ColourOptions", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.Label("Option1", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group col-md-2">
+                        @Html.Label("Body", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.EditorFor(model => model.CPBody1, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody1" } })
+                        @Html.ValidationMessageFor(model => model.CPBody1, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.Label("Border", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+
+                        @Html.EditorFor(model => model.CPBorder1, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder1" } })
+                        @Html.ValidationMessageFor(model => model.CPBorder1, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        @Html.Label("Highlight1", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+
+                        @Html.EditorFor(model => model.CPHighlight1, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPHighlight1" } })
+                        @Html.ValidationMessageFor(model => model.CPHighlight1, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+                <div class="row" id="0">
+                    <table class="form-group col-xs-2" style="margin-left: 5px;">
+
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    @Html.Label("Option2", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <div class="form-group col-xs-2">
+
+
+                        @Html.EditorFor(model => model.CPBody2, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody2" } })
+                        @Html.ValidationMessageFor(model => model.CPBody2, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-xs-2">
+
+
+                        @Html.EditorFor(model => model.CPBorder2, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder2" } })
+                        @Html.ValidationMessageFor(model => model.CPBorder2, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-xs-2">
+
+
+                        @Html.EditorFor(model => model.CPHighlight2, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPHighlight2" } })
+                        @Html.ValidationMessageFor(model => model.CPHighlight2, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+                <div class="row" id="0">
+                    <table class="form-group col-xs-2" style="margin-left: 5px;">
+
+                        <tbody>
+
+
+                            <tr>
+                                <td>
+                                    @Html.Label("Option3", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <div class="form-group col-xs-2">
+
+
+                        @Html.EditorFor(model => model.CPBody3, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody3" } })
+                        @Html.ValidationMessageFor(model => model.CPBody3, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-xs-2">
+
+
+                        @Html.EditorFor(model => model.CPBorder3, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder3" } })
+                        @Html.ValidationMessageFor(model => model.CPBorder3, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group col-xs-2">
+
+                        @Html.EditorFor(model => model.CPHighlight3, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPHighlight3" } })
+                        @Html.ValidationMessageFor(model => model.CPHighlight3, "", new { @class = "text-danger" })
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="dialog" style="display:none;color:red;">
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="btnReg" value="Register" class="btn btn-success" onclick="ShowPopup()" />
+                <input type="button" id="btnClr" value="Clear" class="btn btn-info" onclick="Clear()" />
+                <input type="button" id="btnExt" value="Exit" class="btn btn-info" onclick="Exit()" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/start/jquery-ui.css"
+          rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Msg1").hide();
+        $("#Msg2").hide();
+            $("#Msg3").hide();
+
+            $("#ImageFile1").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+            $("#ImageFile2").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+            $("#ImageFile3").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+        });
+        function ShowPopup() {
+            $(function () {
+               
+                var id = $("#ProjectID").val();
+                var image1 = $("#ImageFile1").val();
+                var img1 = image1.lastIndexOf('\\');
+                var imagefile1 = image1.substring(img1 + 1);
+
+                var image2 = $("#ImageFile2").val();
+                var img2 = image2.lastIndexOf('\\');
+                var imagefile2 = image2.substring(img2 + 1);
+
+                var image3 = $("#ImageFile3").val();
+                var img3 = image3.lastIndexOf('\\');
+                var imagefile3 = image3.substring(img3 + 1);
+                var imagetype1 = imagefile1.substring(imagefile1.lastIndexOf("."))
+                var imagetype2 = imagefile2.substring(imagefile2.lastIndexOf("."))
+                var imagetype3 = imagefile3.substring(imagefile3.lastIndexOf("."))
+
+                var Result = (confirm("A new project is being registered. Ok to proceed?"));
+               
+                if (imagefile1 != "" && (imagefile2 != "" || imagefile3 != "")) {
+                    if (Result == true && ((imagetype1.toLowerCase().indexOf('.jpeg') >= 0 || imagetype1.toLowerCase().indexOf('.jpg') >= 0) && (imagetype2.toLowerCase().indexOf('.jpeg') >= 0 || imagetype2 == "" || imagetype2.toLowerCase().indexOf('.jpg') >= 0) && (imagetype3.toLowerCase().indexOf('.jpeg') >= 0 || imagetype3 == "" || imagetype3.toLowerCase().indexOf('.jpg') >=0)) && $("#CustomerName").val() != "" && imagefile1 != imagefile2 && imagefile1 != imagefile3 && imagefile2 != imagefile3 && imagefile2 != imagefile1 && imagefile3 != imagefile1 && imagefile3 != imagefile2 &&  (imagefile2 != "" || imagefile3 != "")) {
+                       
+                        var val = '@ViewBag.Proid';
+                        $("#CreateForm").unbind('submit').submit();
+                        var message = "New Project (ID: " + val + ") Registered";
+
+                        $("#dialog").html(message);
+                        $("#dialog").dialog({
+                            title: "New Request",
+                            buttons: {
+                                Ok: function () {
+                                    $(this).dialog('close');
+
+                                    window.location.href = "/TSODashboard/Index";
+
+                                }
+
+                            },
+                            modal: true
+                        });
+
+                    }
+                    else if ((Result == true || Result == false) && ((imagetype1.toLowerCase().indexOf('.jpeg') >= 0 || imagetype1.toLowerCase().indexOf('.jpg') >= 0) && (imagetype2.toLowerCase().indexOf('.jpeg') >= 0 || imagetype2 == "" || imagetype2.toLowerCase().indexOf('.jpg') >= 0) && (imagetype3.toLowerCase().indexOf('.jpeg') >= 0 || imagetype3 == "" || imagetype3.toLowerCase().indexOf('.jpg') >= 0)) && ((imagefile1 == imagefile2 || imagefile1 == imagefile3) || imagefile2 == imagefile3 || imagefile2 == imagefile1 || imagefile3 == imagefile1 || imagefile3 == imagefile2) && (imagefile2 != "" || imagefile3 != "")) {
+                       
+                        $(this).dialog('close');
+                        $("#Msg1").show();
+                        $("#Msg2").show();
+                        $("#Msg3").show();
+                        $("#CreateForm").submit(function (e) {
+                           
+                            e.preventDefault();
+
+                        });
+
+                    }
+
+                   else if (Result == false) {
+                        $(this).dialog('close');
+                        $("#CreateForm").submit(function (e) {
+                            e.preventDefault();
+
+                        });
+
+                    };
+                }
+                else  if (imagefile1 != "" && imagefile2 == "" && imagefile3 == "") {
+                    if (Result == true && $("#CustomerName").val() != "" && ((imagetype1.toLowerCase().indexOf('.jpeg') >= 0 || imagetype1.toLowerCase().indexOf('.jpg') >= 0) && (imagetype2.toLowerCase().indexOf('.jpeg') == -1 || imagetype2.toLowerCase().indexOf('.jpg') == -1) && (imagetype3.toLowerCase().indexOf('.jpeg') == -1 || imagetype3.toLowerCase().indexOf('.jpg') == -1)) && imagefile1 != imagefile2 && imagefile1 != imagefile3 &&   imagefile2 != imagefile1 && imagefile3 != imagefile1 &&  (imagefile1 != "" && imagefile2 == "" && imagefile3 == "")) {
+                       
+                        var val = '@ViewBag.Proid';
+                        $("#CreateForm").unbind('submit').submit();
+                        var message = "New Project (ID: " + val + ") Registered";
+                        $("#dialog").html(message);
+                        $("#dialog").dialog({
+                            title: "New Request",
+                            buttons: {
+                                Ok: function () {
+                                    $(this).dialog('close');
+                                    window.location.href = "/TSODashboard/Index";
+                                }
+
+                            },
+                            modal: true
+                        });
+                    }
+                    else  if ((Result == true || Result == false) && ((imagetype1.toLowerCase().indexOf('.jpeg') >= 0 || imagetype1.toLowerCase().indexOf('.jpg') >= 0) && (imagetype2.toLowerCase().indexOf('.jpeg') >= 0 || imagetype2.toLowerCase().indexOf('.jpg') >= 0) && (imagetype3.toLowerCase().indexOf('.jpeg') >= 0 || imagetype3.toLowerCase().indexOf('.jpg') >= 0)) && (imagefile1 == imagefile2 || imagefile1 == imagefile3 || imagefile2 == imagefile3 || imagefile2 == imagefile1 || imagefile3 == imagefile1 || imagefile3 == imagefile2 || (imagefile1 != "" && imagefile2 == "" && imagefile3 == ""))) {
+                       
+                        $(this).dialog('close');
+                        $("#Msg1").show();
+                        $("#Msg2").show();
+                        $("#Msg3").show();
+                        return false;
+                        //window.location.href = "/TSO/NewRequestRegistration";
+                        //window.location.reload = "/TSO/NewRequestRegistration";
+                    }
+                    else  if (Result == false) {
+                        $(this).dialog('close');
+                        $("#CreateForm").submit(function (e) {
+                            e.preventDefault();
+
+                        });
+                        //window.location.href = "/TSO/NewRequestRegistration";
+                        //window.location.reload = "/TSO/NewRequestRegistration";
+                    };
+                }
+            });
+
+        };
+        $(document).ready(function () {
+            $("#CustomerName").mouseover(function () {
+                $(this).attr("title", "(Enter correct information to avoid delays)");
+            });
+            $("#ProjectValue").mouseover(function () {
+                $(this).attr("title", "Optional project value in Rs");
+            });
+            $("#CustomerContactNo").mouseover(function () {
+                $(this).attr("title", "Customer ContactNo (Default_TSO No)");
+            });
+            $("#CustomerEMailId").mouseover(function () {
+                $(this).attr("title", "Customer Email ID (Default TSO Email ID)");
+            });
+            $("#VizOption").mouseover(function () {
+                $(this).attr("title", "Dir=Direct,3rd=3rdParty,SCA=Soft Copy Album,HCA=Hard Copy Album");
+            });
+            $("#Priority").mouseover(function () {
+                $(this).attr("title", "Queue size can affect priorities");
+            });
+            $("#DealerName").mouseover(function () {
+                $(this).attr("title", "Optional");
+            });
+            $("#DealerSAPCode").mouseover(function () {
+                $(this).attr("title", "Optional");
+            });
+            $("#IorEorMS").mouseover(function () {
+                $(this).attr("title", "Is it Interior or exterior or highrise(Multistorey)?");
+            });
+            $("#FreshPainting").mouseover(function () {
+                $(this).attr("title", "Is it a new painting job or repainting ?");
+            });
+            $("#ImageFile1").mouseover(function () {
+                $(this).attr("title", "Can submit upto 3 source images,one of which will be selected. Make sure guidelines are followed");
+            });
+            $("#ImageFile2").mouseover(function () {
+                $(this).attr("title", "Second choice (Guidelines to be followed)");
+            });
+            $("#ImageFile3").mouseover(function () {
+                $(this).attr("title", "Third choice (Guidelines to be followed)");
+            });
+            $("#CPSplRequest").mouseover(function () {
+                $(this).attr("title", "If any special request from client exists, write here)");
+            });
+            $("#btnReg").mouseover(function () {
+                $(this).attr("title", "Click to add a new project for Preview Work. Each Project is identified by a Project ID visible in DashBoard");
+            });
+            $("#btnClr").mouseover(function () {
+                $(this).attr("title", "Click to clear the screen and to start all over again");
+            });
+            $("#btnExt").mouseover(function () {
+                $(this).attr("title", "Click to Return to Dashboard");
+            });
+
+            $("#pan1").mouseover(function () {
+                $(this).attr("title", "(Enter correct shade code or name from Palette)");
+            });
+
+        });
+
+        function Clear() {
+           
+            $(function () {
+                $("#CreateForm").find('input:text, input:password, input:file, select, textarea,number,email').val('');
+                $("#CreateForm").find('input:radio,input:text, input:checkbox').prop('checked', false).prop('selected', false);
+                $("#ProjectValue").val('');
+                $("#CustomerEMailId").val('');
+            });
+        };
+
+        function Exit() {
+            $(function () {
+                window.location.href = "/TSODashboard/Index";
+            });
+        };
+    </script>
+
+}

@@ -1,0 +1,24 @@
+-----------Exception Details on  03-12-2021 09:11:16 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 03-12-2021 09:11:16 AM
+
+Error Line No : ine 368
+
+Error Message: JsonSerializationException
+
+Exception Type: Newtonsoft.Json.JsonSerializationException
+
+Error Location : Error converting value "{"code":0,"message":"Success","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEdWx1eFBsYXlBdXRoVG9rZW4iLCJqdGkiOiIxMWQ4ZjEwNC1mZjEwLTQ0YmYtOTRiMy03MzQzMTNlN2NlZTMiLCJpYXQiOiIxMi8zLzIwMjEgMzo0MDowMiBBTSIsIklkIjoiRExSMDAxIiwiVXNlck5hbWUiOiJUZXN0IERlYWxlciAwMDEiLCJQcmV2aWV3Q2VudGVyIjoiUFZDMDUiLCJQcmV2aWV3Q2VudGVyRW1haWxJRCI6ImluZm9AaW5ub3ZhdHVzc3lzdGVtcy5jb20iLCJDQ0VtYWlsSUQiOiJpbmZvQGlubm92YXR1c3N5c3RlbXMuY29tIiwiQkNDRW1haWxJRCI6ImluZm9AaW5ub3ZhdHVzc3lzdGVtcy5jb20iLCJDYXNlSUQiOiIqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsImV4cCI6MTYzODU4OTIwMiwiaXNzIjoiU21hcnRGYWNlQXV0aFNlcnZlciIsImF1ZCI6IkR1bHV4UGxheUF1dGhDbGllbnQifQ.zI15PpCdTNKuR-2loORxlT7oYYtco_NvP4r4Wzzf9GE","auth":"{\"UserId\":\"DLR001\",\"UserPin\":null,\"UserName\":\"Test Dealer 001\",\"UserEmail\":null,\"PreviewCenterId\":\"PVC05\",\"PreviewCenterEmailId\":\"info@innovatussystems.com\",\"CCEmailId\":\"info@innovatussystems.com\",\"BCCEmailId\":\"info@innovatussystems.com\",\"PreviewCenterStatus\":true}"}" to type 'NerolacPreviewApp.Models.token'. Path '', line 1, position 1113.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

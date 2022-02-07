@@ -1,0 +1,1213 @@
+﻿@model NerolacPreviewApp.Models.TSOProject
+
+@{
+    ViewBag.Title = "NewRequestRegistration";
+}
+
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .isa_info, .isa_success, .isa_warning, .isa_error {
+        margin: 10px 0px;
+    }
+
+    .isa_info {
+        color: #00529B;
+        background-color: #BDE5F8;
+    }
+
+    .isa_success {
+        color: #4F8A10;
+        background-color: #fff;
+    }
+
+    .isa_warning {
+        color: #9F6000;
+        background-color: #fff;
+    }
+
+    .isa_error {
+        color: red;
+        background-color: #fff;
+    }
+
+        .isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+            margin: 10px 22px;
+            font-size: 2em;
+            vertical-align: middle;
+        }
+</style>
+
+@using (Html.BeginForm("NewRequestRegistration", "TSO", FormMethod.Post, new { id = "CreateForm", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <h2 style="color:red;font-weight:bold;font-size:20px;">
+            MyViz2 -  New Project Registration
+        </h2>
+        <br />
+        <div><input type="button" class="btn btn-primary" style="width:120px;height:30px;font-size:12px;" id="btnlastpro" value="Copy last project" onclick="Copylastpro();" title="Press here to copy the last project submitted"></div>
+
+        
+            <p style="float:right;"><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+       
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ProjectID)
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"><b>Registering a new project?</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*No colour choices mentioned.  Default choices will be used.<br />*@
+                    If you wish to change any details, press ‘Return’  else press ‘Go’.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnReturn">Return</button>
+                    <button type="button" class="btn btn-primary" id="btnGo">Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"><b>Registering a new project?</b></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*Thanks for providing your colour choices.<br />*@
+                    If you wish to change any details, press ‘Return’  else press ‘Go’.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnReturn1">Return</button>
+                    <button type="button" class="btn btn-primary" id="btnGo1">Go</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.ProjectName, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+
+                @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Project Name", maxlength = "70", id = "proname" } })
+                @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger", style = "color:red" })
+
+
+
+
+            </div>
+
+            @Html.LabelFor(model => model.ProjectValue, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ProjectValue, new { htmlAttributes = new { @class = "form-control", maxlength = "8", id = "provalue" } })
+                @Html.ValidationMessageFor(model => model.ProjectValue, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.SiteAddress, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.SiteAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Site Address", id = "siteadd" } })
+                @Html.ValidationMessageFor(model => model.SiteAddress, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            @{
+                List<SelectListItem> IorEorMS = new List<SelectListItem>();
+                IorEorMS.Add(new SelectListItem
+                {
+                    Text = "Interior",
+                    Value = "I"
+
+                });
+                IorEorMS.Add(new SelectListItem
+                {
+                    Text = "Exterior",
+                    Value = "E",
+                    Selected = true
+                });
+                IorEorMS.Add(new SelectListItem
+                {
+                    Text = "MultiStorey",
+                    Value = "MS"
+                });
+            }
+            @Html.LabelFor(model => model.IorEorMS, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.IorEorMS, IorEorMS, new { @class = "form-control", style = "width:300px;", id = "ioreorms" })
+                @Html.ValidationMessageFor(model => model.IorEorMS, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            @*@Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @placeholder = "Place" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger", style = "color:red" })
+                </div>*@
+        </div>
+    </div>
+    <hr class="my-12" />
+    <div class="form-group">
+        <div class="row">
+
+            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name", maxlength = "70", id = "cusname" } })
+                @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+
+            @Html.LabelFor(model => model.CustomerContactNo, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CustomerContactNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Contact No", maxlength = "10", id = "cuscontact" } })
+                @Html.ValidationMessageFor(model => model.CustomerContactNo, "", new { @class = "text-danger" })
+            </div>
+            @*@Html.LabelFor(model => model.CustomerEMailId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.CustomerEMailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer EMail ID" } })
+                    @Html.ValidationMessageFor(model => model.CustomerEMailId, "", new { @class = "text-danger" })
+                </div>*@
+
+        </div>
+    </div>
+    <hr class="my-12" />
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.DealerSAPCode, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DealerSAPCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dealer SAP Code", id = "dealersap" , @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.DealerSAPCode, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.DealerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DealerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Dealer Name", id = "dealername", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.DealerName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-12" />
+    <div class="form-group">
+        <div class="row">
+            @{
+                List<SelectListItem> VizOption = new List<SelectListItem>();
+                VizOption.Add(new SelectListItem
+                {
+                    Text = "On The Spot",
+                    Value = "OTS"
+
+                });
+                VizOption.Add(new SelectListItem
+                {
+                    Text = "SoftCopyAlbum",
+                    Value = "SCA",
+                     Selected = true
+
+                });
+                VizOption.Add(new SelectListItem
+                {
+                    Text = "HardCopyAlbum",
+                    Value = "HCA"
+                   
+                });
+            }
+            @Html.LabelFor(model => model.VizOption, htmlAttributes: new { @class = "control-label col-md-2 required", Title = "visualization Option" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.VizOption, VizOption, new { @class = "form-control", style = "width:300px;", id = "vizopt", @onchange = "getVal()" , Title = "Choose 'On the spot' for instant visualization, Choose 'HardCopyAlbum' or 'SoftCopyAlbum' for professionalize visualization " })
+                @Html.ValidationMessageFor(model => model.VizOption, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            @{
+                List<SelectListItem> FreshPaintings = new List<SelectListItem>();
+                FreshPaintings.Add(new SelectListItem
+                {
+                    Text = "Fresh",
+                    Value = "Y",
+                    Selected = true
+                });
+                FreshPaintings.Add(new SelectListItem
+                {
+                    Text = "Repainting",
+                    Value = "N"
+                });
+            }
+            @Html.LabelFor(model => model.FreshPainting, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.FreshPainting, FreshPaintings, new { @class = "form-control", style = "width:300px;", id = "paint" })
+                @Html.ValidationMessageFor(model => model.FreshPainting, "", new { @class = "text-danger" })
+            </div>
+            @*@Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Priority, new { htmlAttributes = new { @class = "form-control", @Value = "N", @placeholder = "Priority" } })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger", style = "color:red" })
+                </div>*@
+        </div>
+    </div>
+    @*<div class="form-group">
+            <div class="row">
+                @Html.LabelFor(model => model.IorEorMS, htmlAttributes: new { @class = "control-label col-md-2 required" })
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.IorEorMS, ViewBag.IorEorMS as IEnumerable<SelectListItem>, "Select Options", new { @class = "form-control", style = "width:300px;" })
+                    @Html.ValidationMessageFor(model => model.IorEorMS, "", new { @class = "text-danger", style = "color:red" })
+                </div>
+            </div>
+        </div>*@
+    <p style="color:red;font-size:16px;display:inline"><b> Depot \ Location </b></p><p style="display: inline;font-size:11px">&nbsp;&nbsp;&nbsp;(Hard Copy will be delivered to the Depot address below. If you wish delivery to another address, overwrite the given details.)</p>
+    <hr class="my-12" />
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.Depot, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Depot, new { htmlAttributes = new { @class = "form-control", @placeholder = "Depot", disabled = "disabled", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.Depot, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DepotName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotName, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotName" } })
+                @Html.ValidationMessageFor(model => model.DepotName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.DepotAd1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotAd1, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotAd1" } })
+                @Html.ValidationMessageFor(model => model.DepotAd1, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DepotAd2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotAd2, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotAd2" } })
+                @Html.ValidationMessageFor(model => model.DepotAd2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.DepotAd3, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotAd3, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotAd3" } })
+                @Html.ValidationMessageFor(model => model.DepotAd3, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DepotAd4, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotAd4, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotAd4" } })
+                @Html.ValidationMessageFor(model => model.DepotAd4, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            @Html.LabelFor(model => model.DepotPinCode, htmlAttributes: new { @class = "control-label col-md-2 required" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotPinCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotPinCode", maxlength = "6" } })
+                @Html.ValidationMessageFor(model => model.DepotPinCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" style="display:none;">
+        <div class="row">
+            @Html.LabelFor(model => model.DepotEmailId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotEmailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotEmailId" } })
+                @Html.ValidationMessageFor(model => model.DepotEmailId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DepotContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotContactNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "DepotContactNo", maxlength = "10" } })
+                @Html.ValidationMessageFor(model => model.DepotContactNo, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.DepotContactName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.DepotContactName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Depot Contact Name" } })
+                @Html.ValidationMessageFor(model => model.DepotContactName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center;">
+        <p style="color:red;font-size:12px;display:inline;width:300px;text-align:center;"> @Html.DisplayFor(model => model.DepotRemarks)</p>
+    </div>
+    <br />
+    <hr class="my-12" />
+    <p style="color:red;font-size:16px;display:inline"><b>Image Source</b></p><p style="display: inline;font-size:11px">&nbsp;&nbsp;&nbsp;(Only .JPG\.JPEG files allowed.This section is free format. You can specify your choices or leave blank for us to decide)</p>
+
+    <div class="isa_warning" style="font:small-caption;">
+        @*<span class="glyphicon glyphicon-ok-sign"></span>*@
+        <b style="color:crimson;">
+            Source Image must be atleast 1280x1024 Pixels, Size>500KB,lesser than 10MB, Good Lighting,Proper View of the building. Avoid images that have too many obstructions, ambiguities, too many shadows, too small an object, photo of photo etc.If VizOption=HardCopy or SoftCopy, You can submit 1 or 2 or 3 versions of the same image. The best one will be used by us. If you wish to submit more than ONE image, register each one as a separate project. Please refer to detailed guidelines.
+        </b>
+    </div>
+    <hr class="my-12" />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">@Html.LabelFor(model => model.ImageFileName1, htmlAttributes: new { @class = "control-label required" ,id="img1"})</div>
+            <div class="col-md-4">@Html.LabelFor(model => model.ImageFileName2, htmlAttributes: new { @class = "control-label" ,id="img2"})</div>
+            <div class="col-md-4">@Html.LabelFor(model => model.ImageFileName3, htmlAttributes: new { @class = "control-label ",id="img3" })</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.ImageFile1, new { @class = "form-control", type = "file", accept = ".jpg,.jpeg|image/*", @name = "ImageFile1", @placeholder = "ImageFile1", @style = "max-width:400px;" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg1" style="color:red;font-size:15px;font-weight:bold;"></Label>
+                @Html.ValidationMessageFor(model => model.ImageFile1, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            <div class="col-md-4" id="img2div">
+                @Html.TextBoxFor(m => m.ImageFile2, new { @class = "form-control", type = "file", accept = ".jpg,.jpeg|image/*", @name = "ImageFile2", @placeholder = "ImageFile2", @style = "max-width:400px;" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg2" style="color:red;font-size:15px;font-weight:bold;"></Label>
+                @Html.ValidationMessageFor(model => model.ImageFile2, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+            <div class="col-md-4" id="img3div">
+                @Html.TextBoxFor(m => m.ImageFile3, new { @class = "form-control", type = "file", accept = ".jpg,.jpeg|image/*", @name = "ImageFile3", @placeholder = "ImageFile3", @style = "max-width:400px;" }) &nbsp;  &nbsp;  &nbsp; &nbsp;  <Label id="Msg3" style="color:red;font-size:15px;font-weight:bold;"></Label>
+                @Html.ValidationMessageFor(model => model.ImageFile3, "", new { @class = "text-danger", style = "color:red" })
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel-body" id="pan1">
+        <div style="display:inline;"><input type="button" class="btn btn-primary" style="width:250px;height:30px;font-size:12px;" id="btnprvclr" value="Previous Colour Options" onclick="prvclropt();" title="Press here to select colour options from previous projects">&nbsp;<input type="button" class="btn btn-primary" style="width:120px;height:30px;font-size:12px;display:inline;" id="btnclrreset" value="Reset" onclick="clrreset();"></div>
+        <div class="container">
+            <div class="row" id="0">
+                <table class="form-group col-xs-2" style="margin-left:5px;">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.Label("ColourOptions", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.Label("Option1", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group col-md-3">
+                    @Html.Label("Body", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.CPBody1, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody1", id = "opt1" } })
+                    @Html.ValidationMessageFor(model => model.CPBody1, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-md-3">
+                    @Html.Label("Border", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+
+                    @Html.EditorFor(model => model.CPBorder1, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder1", id = "opt11" } })
+                    @Html.ValidationMessageFor(model => model.CPBorder1, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-md-3">
+                    @Html.Label("Others", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:15px;" })
+
+                    @Html.EditorFor(model => model.CPHighlight1, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPOthers1", id = "opt111" } })
+                    @Html.ValidationMessageFor(model => model.CPHighlight1, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+            <div class="row" id="0">
+                <table class="form-group col-xs-2" style="margin-left: 5px;">
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                @Html.Label("Option2", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+                <div class="form-group col-xs-3">
+
+
+                    @Html.EditorFor(model => model.CPBody2, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody2", id = "opt2" } })
+                    @Html.ValidationMessageFor(model => model.CPBody2, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-xs-3">
+
+
+                    @Html.EditorFor(model => model.CPBorder2, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder2", id = "opt22" } })
+                    @Html.ValidationMessageFor(model => model.CPBorder2, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-xs-3">
+
+
+                    @Html.EditorFor(model => model.CPHighlight2, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPOthers2", id = "opt222" } })
+                    @Html.ValidationMessageFor(model => model.CPHighlight2, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+            <div class="row" id="0">
+                <table class="form-group col-xs-2" style="margin-left: 5px;">
+
+                    <tbody>
+
+
+                        <tr>
+                            <td>
+                                @Html.Label("Option3", htmlAttributes: new { @class = "control-label col-md-2", style = "margin-left:30px;" })
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+                <div class="form-group col-xs-3">
+
+
+                    @Html.EditorFor(model => model.CPBody3, new { htmlAttributes = new { @class = "form-control", @placeholder = "CPBody3", id = "opt3" } })
+                    @Html.ValidationMessageFor(model => model.CPBody3, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-xs-3">
+
+
+                    @Html.EditorFor(model => model.CPBorder3, new { htmlAttributes = new { @class = "form-control", style = "margin-left:15px;", @placeholder = "CPBorder3", id = "opt33" } })
+                    @Html.ValidationMessageFor(model => model.CPBorder3, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group col-xs-3">
+
+                    @Html.EditorFor(model => model.CPHighlight3, new { htmlAttributes = new { @class = "form-control", style = "margin-left:25px;", @placeholder = "CPOthers3", id = "opt333" } })
+                    @Html.ValidationMessageFor(model => model.CPHighlight3, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divhidden" class="row" style="margin-top:25px" hidden>
+        @*<p style="padding-left: 15px; font-size: 12px;">Sort is possible on blue title.</p>*@
+        <div class="col-md-12">
+            <div class="panel panel-primary list-panel" style="display: inline-block; width: 100%;" id="list-panel">
+                <div class="panel-heading list-panel-heading" style="width:100%;">
+                    <div>
+                       <div > <h1 class="panel-title list-panel-title" style="display:inline;">Previous Colour Options</h1>&nbsp;<input type="button" class="btn btn-primary" style="float:right;background-color:white;color:blue;width:120px;height:30px;font-size:12px;display:inline;" id="btnoptselect" value="Close" onclick="optselect();">&nbsp;<input type="button" class="btn btn-primary" style="background-color:white;color:blue;width:120px;height:30px;font-size:12px;display:inline;float:right;" id="btnoptreset" value="Reset" onclick="optreset();"><p>Do you wish to select a colour combination from your previous projects? If yes, Click one of the check boxes to copy it .</p></div>
+                        
+                    </div>
+                </div>
+                <div class="panel-body" style="width: 100%;position: relative">
+                    @*<div style="width: 100%; overflow: auto; overflow-x: visible; margin-top: 20px; ">*@
+                    <div id="dvData" style="width: 100%; height:400px;">
+                        <div style="width:100%;height:400px;overflow:scroll;" id="mainmdl">
+                            <table id="assets-data-table" class="table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th title="Click here, if you wish to use this colour combination as option1" style="width:0.12%;">O1</th>
+                                        <th title="Click here, if you wish to use this colour combination as option2" style="width:0.12%;">O2</th>
+                                        <th title="Click here, if you wish to use this colour combination as option3" style="width:0.12%;">O3</th>
+                                        <th style="white-space: nowrap; position: sticky;width:0.12%;" hidden>
+                                            RSN
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;" title="ProjectID">
+                                            PID
+
+                                        </th>
+
+
+
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;" title="OptionNo">
+                                            #
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code1
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name1
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.1%;">
+                                            Colour1
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code2
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name2
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.1%;">
+                                            Colour2
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code3
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name3
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.1%;">
+                                            Colour3
+
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Comments != null)
+                                    {
+                                        foreach (var asset in Model.Comments)
+                                        {
+                                        <tr style="font-size:12px;height:1px;">
+                                            <td>
+                                                <input onclick="ckBox1(this)" class="options" type="checkbox" value="@asset.RSN" id="Option1" />
+                                            </td>
+                                            <td>
+                                                <input onclick="ckBox2(this)" class="options" type="checkbox" value="@asset.RSN" id="Option2" />
+                                            </td>
+                                            <td>
+                                                <input onclick="ckBox3(this)" class="options" type="checkbox" value="@asset.RSN" id="Option3" />
+                                            </td>
+
+                                            <td style="font-size:12px;height:2px;" hidden>
+                                                <nobr>@asset.RSN</nobr>
+                                            </td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Projectid</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Optionno</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code1</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name1</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;background-color:@asset.hcode1;"><nobr></nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code2</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name2</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;background-color:@asset.hcode2;"><nobr></nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code3</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name3</nobr></td>
+
+                                            <td style="font-size:12px;height:2px; background-color:@asset.hcode3;"><nobr></nobr></td>
+                                        </tr>
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*@if (Model.PageCount > 1)
+                {
+                    <div class="pager">
+                        @Html.PagedListPager(Model, page => Url.Action("Active_InActiveUserDetails", new
+                                       {
+                                           page,
+                                           sortOrder = ViewBag.currentSort,
+                                           q = ViewBag.searchQuery
+                                       }))
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                }*@
+        </div>
+    </div>
+    <hr class="my-12" />
+    <div class="form-group" id="pan11">
+        <div class="row">
+            @Html.LabelFor(model => model.CPSplRequest, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CPSplRequest, new { htmlAttributes = new { @class = "form-control", @placeholder = "Any special request", @style = "max-width:465px;" } })
+                @Html.ValidationMessageFor(model => model.CPSplRequest, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog" style="display:none;color:red;">
+    </div>
+    <div class="isa_error" style="font:small-caption;">
+        <span class="glyphicon glyphicon-check"></span>
+        <b>Make sure you have entered all details correctly.Modification not allowed after a project is registered.</b>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-10">
+            <input type="submit" id="btnReg" value="Register" class="btn btn-success" onclick="javascript: return ShowPopup();" />
+            <input type="button" id="btnClr" value="Clear" class="btn btn-info" onclick="Clear()" />
+            <input type="button" id="btnExt" value="Exit" class="btn btn-warning" onclick="Exit()" />
+        </div>
+    </div>
+</div>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/start/jquery-ui.css"
+          rel="stylesheet" type="text/css" />*@
+
+<script type="text/javascript">
+     @*function GetLastProjectUsingAjax() {
+         var UserId =  @Session["UserID"].ToString();
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetLastProject","TSO")',
+            data: { "UserId": UserId },
+            dataType: 'json',
+            success: function (data) {
+                alert(data);
+                //$('#id').text(emp.employee.Id);
+                //$('#firstName').text(emp.employee.FirstName);
+                //$('#lastName').text(emp.employee.LastName);
+            },
+            error: function (emp) {
+                alert('error');
+            }
+        });
+    }*@
+        $(document).ready(function () {
+            if('@ViewBag.successMessage'!="")
+            {
+              $('#divSuccessMessage').show();
+            }
+            else
+            {
+              $('#divSuccessMessage').hide();
+            }
+            $("#Msg1").hide();
+            $("#Msg2").hide();
+            $("#Msg3").hide();
+
+            $("#ImageFile1").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+            $("#ImageFile2").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+            $("#ImageFile3").click(function () {
+
+                $("#Msg1").hide();
+                $("#Msg2").hide();
+                $("#Msg3").hide();
+            });
+
+
+        });
+
+   
+    function ShowPopup() {
+        debugger;
+        event.preventDefault();
+        if ($("form").valid()) {
+        $(function () {
+
+            var pval = $("#provalue");
+            var CPBody1 = $('#CPBody1');
+            var CPBorder1 = $('#CPBorder1');
+            var CPHighlight1 = $('#CPHighlight1');
+            var CPBody2 = $('#CPBody2');
+            var CPBorder2 = $('#CPBorder2');
+            var CPHighlight2 = $('#CPHighlight2');
+            var CPBody3 = $('#CPBody3');
+            var CPBorder3 = $('#CPBorder3');
+            var CPHighlight3 = $('#CPHighlight3');
+            if (pval.val == '')
+            {
+                $("#provalue").val('0');
+            }
+            if (CPBody1.val() == '' && CPBorder1.val() == '' && CPHighlight1.val() == '' &&
+                CPBody2.val() == '' && CPBorder2.val() == '' && CPHighlight2.val() == '' &&
+                CPBody3.val() == '' && CPBorder3.val() == '' && CPHighlight3.val() == '') {
+                $('#exampleModalCenter').modal('show');
+            }
+            else if (CPBody1.val() != '' && CPBorder1.val() != '' && CPHighlight1.val() != '' &&
+                CPBody2.val() != '' && CPBorder2.val() != '' && CPHighlight2.val() != '' &&
+                CPBody3.val() != '' && CPBorder3.val() != '' && CPHighlight3.val() != '') {
+                $('#exampleModalCenter1').modal('show');
+
+            }
+            else {
+                $('#exampleModalCenter1').modal('show');
+
+            }
+
+        });
+        }
+
+            return false;
+
+        };
+
+    $("#btnGo").click(function () {
+        debugger;
+            $('#exampleModalCenter').modal('hide');
+            var Result = (confirm("A new project is being registered.Have you entered all details correctly? Ok to proceed?"));
+            if (Result == true) {
+                $("#btnReg").attr('disabled', 'disabled');
+                $("#CreateForm").unbind('submit').submit();
+            }
+            else if (Result == false) {
+                $(this).dialog('close');
+                $("#CreateForm").submit(function (e) {
+                    e.preventDefault();
+                });
+
+            };
+
+        });
+
+    $("#btnGo1").click(function () {
+        debugger;
+        $('#exampleModalCenter1').modal('hide');
+        var Result = (confirm("A new project is being registered.Have you entered all details correctly? Ok to proceed?"));
+        if (Result == true) {
+            $("#btnReg").attr('disabled', 'disabled');
+            $("#CreateForm").unbind('submit').submit();
+        }
+        else if (Result == false) {
+            $(this).dialog('close');
+            $("#CreateForm").submit(function (e) {
+                e.preventDefault();
+            });
+
+        };
+    });
+
+            $(document).ready(function () {
+                $("#ProjectName").mouseover(function () {
+                    $(this).attr("title", " Enter a name to identify the project. A unique ID will be assigned when the project is registered.This is printed in HCA (20 Characters Max)");
+            });
+            $("#CustomerName").mouseover(function () {
+                $(this).attr("title", "For which Lead/Customer this project is ?");
+            });
+                $("#SiteAddress").mouseover(function () {
+                $(this).attr("title", "This is printed in HCA (20 Characters Max)");
+            });
+            $("#ProjectValue").mouseover(function () {
+                $(this).attr("title", "A value entered here can help in calculating PipeLine Only Nos. 8 Digits Max");
+            });
+            $("#CustomerContactNo").mouseover(function () {
+                $(this).attr("title", "If present, can help in following up");
+            });
+            $("#CustomerEMailId").mouseover(function () {
+                $(this).attr("title", "Customer Email ID (Default TSO Email ID)");
+            });
+            $("#VizOption").mouseover(function () {
+                $(this).attr("title", "If Hard Copy is reqd. a printed album with three Colour Previews will be couriered to the Depot address");
+            });
+            $("#Priority").mouseover(function () {
+                $(this).attr("title", "Queue size can affect priorities");
+            });
+            $("#DealerName").mouseover(function () {
+                $(this).attr("title", "Optional");
+            });
+            $("#DealerSAPCode").mouseover(function () {
+                $(this).attr("title", "Must be a valid one present in the system");
+            });
+            $("#IorEorMS").mouseover(function () {
+                $(this).attr("title", "I - Interior- Inside a room, E - Exterior - Outside walls of a villa, G+3 , MS-MultiStorey");
+            });
+            $("#FreshPainting").mouseover(function () {
+                $(this).attr("title", "Choose Fresh if it is a new building else Repainting if it is an old building requiring repainting");
+            });
+                $("#Depot").mouseover(function () {
+                    $(this).attr("title", " Depot Linked to the Executive");
+                });
+                $("#DepotName").mouseover(function () {
+                    $(this).attr("title", "Depot name.where the HCA will be delivered");
+                });
+                $("#DepotAd1").mouseover(function () {
+                    $(this).attr("title", "BusinessName, DoorNo,Street Important for proper delivery");
+                });
+                $("#DepotAd2").mouseover(function () {
+                    $(this).attr("title", "Place/Area name in the town/city Important for proper delivery");
+                });
+                $("#DepotAd3").mouseover(function () {
+                    $(this).attr("title", "City or Town Name  Important for proper delivery");
+                });
+                $("#DepotAd4").mouseover(function () {
+                    $(this).attr("title", "State Name(Important for proper delivery)");
+                });
+                $("#DepotPinCode").mouseover(function () {
+                    $(this).attr("title", "Ensure correct PinCode for proper delivery");
+                });
+            $("#ImageFile1").mouseover(function () {
+                $(this).attr("title", "File will be renamed as UserID_yyyymmddhhmnssttt");
+            });
+            $("#ImageFile2").mouseover(function () {
+                $(this).attr("title", "Second choice (Guidelines to be followed)");
+            });
+            $("#ImageFile3").mouseover(function () {
+                $(this).attr("title", "Third choice (Guidelines to be followed)");
+            });
+            $("#CPSplRequest").mouseover(function () {
+                $(this).attr("title", "Customer's preferred colour shades or colours not to be used etc can be specified here");
+            });
+            $("#btnReg").mouseover(function () {
+                $(this).attr("title", "Click to add a new project for Preview Work. Each Project is identified by a Project ID visible in DashBoard");
+            });
+            $("#btnClr").mouseover(function () {
+                $(this).attr("title", "Click to clear the screen and to start all over again");
+            });
+            $("#btnExt").mouseover(function () {
+                $(this).attr("title", "Click to Return to Dashboard");
+            });
+
+                $("#CPBody1").mouseover(function () {
+                $(this).attr("title", "Typically the main wall which is prominent and larger area.Write the colour name or code if known or colour family or plain English");
+            });
+                $("#CPBorder1").mouseover(function () {
+                    $(this).attr("title", "Usually the area around a window frame, construction that divides two rooms etc.Write the colour name or code if known or colour family or plain English");
+                });
+                $("#CPHighlight1").mouseover(function () {
+                    $(this).attr("title", "Typically the decorations, projections, areas that enhance the beauty etc.Write the colour name or code if known or colour family or plain English");
+                });
+
+
+
+
+        });
+
+        function Clear() {
+            $(function () {
+                $("#CreateForm").find('input:text, input:password, input:file, select, textarea,number,email').val('');
+                $("#CreateForm").find('input:radio,input:text, input:checkbox').prop('checked', false).prop('selected', false);
+                $("#provalue").val('0');
+
+                $("#CustomerEMailId").val('');
+            });
+        };
+
+        function Exit() {
+            $(function () {
+                window.location.href = '@Url.Action("Index", "TSODashboard")';
+            });
+    };
+     function prvclropt() {
+         $(function () {
+             debugger;
+                var div = document.getElementById("divhidden");
+
+                   div.style.display = "block";
+
+            });
+    };
+    function optreset() {
+        $(function () {
+            debugger;
+            var grid = document.getElementById("assets-data-table");
+            var checkBoxes = grid.getElementsByTagName("INPUT");
+
+            for (var i = 0; i < checkBoxes.length; i++) {
+                
+                var row = checkBoxes[i].parentNode.parentNode;
+                $(row).find('input[type="checkbox"]').prop('disabled', false);
+                $(row).find('input[type="checkbox"]').prop('checked', false);
+                
+            }
+
+        });
+    };
+    function clrreset() {
+        $(function () {
+            debugger;
+            $('#opt1').val('');
+            $('#opt11').val('');
+            $('#opt111').val('');
+            $('#opt2').val('');
+            $('#opt22').val('');
+            $('#opt222').val('');
+            $('#opt3').val('');
+            $('#opt33').val('');
+            $('#opt333').val('');
+
+        });
+    };
+    function optselect() {
+        $(function () {
+            
+        var div = document.getElementById("divhidden");
+
+            div.style.display = "None";
+
+       
+            });
+    };
+    function ckBox1(e) {
+                debugger;
+       
+       
+        if (!this.checked) {
+            
+                    var grid = document.getElementById("assets-data-table");
+            var checkBoxes = grid.getElementsByTagName("INPUT");
+            var table = document.getElementById("assets-data-table"), rIndex, cIndex;
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                    $(row).find('input[type="checkbox"]').prop('disabled', true);
+
+                }
+            }
+            // table rows
+            for (var i = 1; i < table.rows.length; i++) {
+                // row cells
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    table.rows[i].cells[j].onclick = function () {
+                        rIndex = this.parentElement.rowIndex;
+                        cIndex = this.cellIndex + 1;
+                        //alert("Row : " + rIndex + " , Cell : " + cIndex);
+                        debugger;
+                        
+                            let str = table.rows[rIndex].cells[6].innerHTML;
+                            str = str.replace('<nobr>', '');
+                            str = str.replace('</nobr>', '');
+                            $('#opt1').val(str);
+                            let str1 = table.rows[rIndex].cells[9].innerHTML;
+                            str1 = str1.replace('<nobr>', '');
+                            str1 = str1.replace('</nobr>', '');
+                            $('#opt11').val(str1);
+                            let str2 = table.rows[rIndex].cells[12].innerHTML;
+                            str2 = str2.replace('<nobr>', '');
+                            str2 = str2.replace('</nobr>', '');
+                            $('#opt111').val(str2);
+                        
+                       
+                    };
+                }
+            }
+                
+                   
+                }
+                
+
+    }
+    function ckBox2(e) {
+        debugger;
+       
+        if (!this.checked) {
+           
+            var grid = document.getElementById("assets-data-table");
+            var checkBoxes = grid.getElementsByTagName("INPUT");
+            var table = document.getElementById("assets-data-table"), rIndex, cIndex;
+
+            // table rows
+            for (var i = 1; i < table.rows.length; i++) {
+                // row cells
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    table.rows[i].cells[j].onclick = function () {
+                        rIndex = this.parentElement.rowIndex;
+                        cIndex = this.cellIndex + 1;
+                        //alert("Row : " + rIndex + " , Cell : " + cIndex);
+
+                        let str = table.rows[rIndex].cells[6].innerHTML;
+                        str = str.replace('<nobr>', '');
+                        str = str.replace('</nobr>', '');
+                        $('#opt2').val(str);
+                        let str1 = table.rows[rIndex].cells[9].innerHTML;
+                        str1 = str1.replace('<nobr>', '');
+                        str1 = str1.replace('</nobr>', '');
+                        $('#opt22').val(str1);
+                        let str2 = table.rows[rIndex].cells[12].innerHTML;
+                        str2 = str2.replace('<nobr>', '');
+                        str2 = str2.replace('</nobr>', '');
+                        $('#opt222').val(str2);
+
+                    };
+                }
+            }
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                    $(row).find('input[type="checkbox"]').prop('disabled', true);
+                    //let str = row.cells[6].innerHTML;
+                    //str = str.replace('<nobr>', '');
+                    //str = str.replace('</nobr>', '');
+                    //$('#opt2').val(str);
+                    //let str1 = row.cells[9].innerHTML;
+                    //str1 = str1.replace('<nobr>', '');
+                    //str1 = str1.replace('</nobr>', '');
+                    //$('#opt22').val(str1);
+                    //let str2 = row.cells[12].innerHTML;
+                    //str2 = str2.replace('<nobr>', '');
+                    //str2 = str2.replace('</nobr>', '');
+                    //$('#opt222').val(str2);
+                }
+            }
+
+        }
+
+
+    }
+
+    function ckBox3(e) {
+        debugger;
+       
+        if (!this.checked) {
+
+            var grid = document.getElementById("assets-data-table");
+            var checkBoxes = grid.getElementsByTagName("INPUT");
+
+            var table = document.getElementById("assets-data-table"), rIndex, cIndex;
+
+            // table rows
+            for (var i = 1; i < table.rows.length; i++) {
+                // row cells
+                for (var j = 0; j < table.rows[i].cells.length; j++) {
+                    table.rows[i].cells[j].onclick = function () {
+                        rIndex = this.parentElement.rowIndex;
+                        cIndex = this.cellIndex + 1;
+                        //alert("Row : " + rIndex + " , Cell : " + cIndex);
+
+                        let str = table.rows[rIndex].cells[6].innerHTML;
+                        str = str.replace('<nobr>', '');
+                        str = str.replace('</nobr>', '');
+                        $('#opt3').val(str);
+                        let str1 = table.rows[rIndex].cells[9].innerHTML;
+                        str1 = str1.replace('<nobr>', '');
+                        str1 = str1.replace('</nobr>', '');
+                        $('#opt33').val(str1);
+                        let str2 = table.rows[rIndex].cells[12].innerHTML;
+                        str2 = str2.replace('<nobr>', '');
+                        str2 = str2.replace('</nobr>', '');
+                        $('#opt333').val(str2);
+
+                    };
+                }
+            }
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                    $(row).find('input[type="checkbox"]').prop('disabled', true);
+                    //let str = row.cells[6].innerHTML;
+                    //str = str.replace('<nobr>', '');
+                    //str = str.replace('</nobr>', '');
+                    //$('#opt3').val(str);
+                    //let str1 = row.cells[9].innerHTML;
+                    //str1 = str1.replace('<nobr>', '');
+                    //str1 = str1.replace('</nobr>', '');
+                    //$('#opt33').val(str1);
+                    //let str2 = row.cells[12].innerHTML;
+                    //str2 = str2.replace('<nobr>', '');
+                    //str2 = str2.replace('</nobr>', '');
+                    //$('#opt333').val(str2);
+                }
+            }
+
+        }
+
+
+    }
+
+    function getVal() {
+        debugger;
+        var selectedVal = document.getElementById("vizopt").value;
+
+        if (selectedVal == "OTS") {
+            $("#img2").hide();
+            $("#img3").hide();
+            $("#img2div").hide();
+            $("#img3div").hide();
+            $("#pan1").hide();
+            $("#pan11").hide();
+        }
+        else {
+            $("#img2").show();
+            $("#img3").show();
+            $("#img2div").show();
+            $("#img3div").show();
+            $("#pan1").show();
+            $("#pan11").show();
+        }
+        
+    };
+            function Copylastpro() {
+                $(function () {
+                   // alert("LASTPROJECT");
+                   //var UserId = @Session["UserID"];//Session["Userlevel"].ToString()
+                    //var UserId = '<%= Session["UserID"] %>';
+                    var UserId = '@Session["UserID"]';
+                    //alert(UserId);
+                $.ajax({
+                        type: 'GET',
+            url: '@Url.Action("GetLastProject","TSO")',
+                    data: { "UserId": UserId },
+            dataType: 'json',
+            success: function (data) {
+                //alert(data);
+               
+                $('#proname').val(data[0]);
+                $('#provalue').val(data[1]);
+                $('#siteadd').val(data[2]);
+                $('#eoriorms').val(data[7]);
+                $('#cusname').val(data[3]);
+                $('#cuscontact').val(data[4]);
+                $('#dealersap').val(data[5]);
+                $('#dealername').val(data[6]);
+                $('#vizopt').val(data[8]);
+                $('#paint').val(data[9]);
+                var selectedVal = document.getElementById("vizopt").value;
+                
+                if (selectedVal == "OTS") {
+                    $("#img2").hide();
+                    $("#img3").hide();
+                    $("#img2div").hide();
+                    $("#img3div").hide();
+                    $("#pan1").hide();
+                    $("#pan11").hide();
+                }
+                else {
+                    $("#img2").show();
+                    $("#img3").show();
+                    $("#img2div").show();
+                    $("#img3div").show();
+                    $("#pan1").show();
+                    $("#pan11").show();
+                }
+
+            },
+            error: function (emp) {
+                alert('error');
+            }
+                    });
+                });
+
+        };
+</script>
+
+}

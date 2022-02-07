@@ -1,0 +1,245 @@
+﻿@model NerolacPreviewApp.Models.ColorChoices
+@{
+    ViewBag.Title = "Color Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+<title> MyViz14 - Color Choices </title>
+<html>
+<head>
+    <style>
+        .span1{
+            padding-top: 70px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+            padding-left: 10px;
+            /*width:200px;*/
+        }
+        .td1 {
+            width:100px;
+        }
+        .td {
+            width: 80px;
+        }
+       
+     </style>
+</head>
+<body>
+
+    <div class="container page-todo bootstrap snippets bootdeys">
+        <div class="col-sm-12 tasks" style="font-weight:bold;"><br/>
+                                                               <div class="task-list" style="background: #fff; height: auto; border: solid 2px;">
+                                                                   <div class="task-list" style="background: #fff; height: auto; margin: 10px; ">
+
+                                                                       @*<h3 style="display:inline;">MyViz14 - Color Choices</h3>*@
+
+                                                                       <p style="float:right;display:inline"><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard&nbsp;</b></a></p>
+
+
+                                                                       <table style="font-family:Arial;font-size:13px;font-weight:300">
+                                                                           <tr style="height:20px;">
+                                                                               <td> <b>ProjectID</b> </td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.ProjectID)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td> <b>ProjectName</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.ProjectName) </td>
+
+                                                                           </tr>
+
+                                                                           <tr style="height:20px;">
+                                                                               <td><b> CaseID</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.caseID)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td></td>
+                                                                               <td></td>
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td> <b>NeroliteID</b></td>
+                                                                               <td>:  @Html.DisplayFor(Model => Model.NeroliteID)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td> <b>NeroliteName</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.NeroliteName) </td>
+
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td> <b>NeroliteNo</b></td>
+                                                                               <td>:  @Html.DisplayFor(Model => Model.NeroliteNo)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td> <b>NeroliteEmail</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.NeroliteEmail) </td>
+
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td><b>Type</b></td>
+                                                                               @if (Model.Options == "I")
+                                                                               {
+                                                                                   <td>: Interior</td>
+                                                                               }
+                                                                               @if (Model.Options == "E")
+                                                                               {
+                                                                                   <td>: Exterior</td>
+                                                                               }
+                                                                               @if (Model.Options == "MS")
+                                                                               {
+                                                                                   <td>: MultiStorey</td>
+                                                                               }
+
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td></td>
+                                                                               <td></td>
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td><b>Resolution(Pixels)</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.Resolution)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td></td>
+                                                                               <td></td>
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td><b>Size(KB)</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.Size)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td></td>
+                                                                               <td></td>
+                                                                           </tr>
+                                                                           <tr style="height:20px;">
+                                                                               <td><b>InSy Comments</b></td>
+                                                                               <td style="width: 300px;">: @Html.DisplayFor(Model => Model.InsyComments)</td>
+                                                                               <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                               <td></td>
+                                                                               <td></td>
+                                                                           </tr>
+                                                                       </table>
+
+
+                                                                       <table style="color:RGB(230,45,95);font-size:14px;"><tr><td>Colour Choices</td><tr></table>
+                                                                       @*<h4 style="color:RGB(230,45,95);">&nbsp;Colour Choices</h4>*@
+                                                                       <table style="font-family: Arial; font-size: 14px; font-weight: 300; border-collapse: separate; border-spacing: 13px 5px;">
+                                                                           <tr style="height:20px;">
+                                                                               <td style="height:40px;width:50px;"></td>
+                                                                               <td><b>Body</b></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                               <td><b>Border</b></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                               <td><b>Highlight</b></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                               <td style="height: 40px; width: 100px;"></td>
+                                                                           </tr>
+
+                                                                           <tr>
+                                                                               <td style="height: 40px; width: 50px; ">1.</td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Body1)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBody1)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hr1;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Border1)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBorder1)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hg1;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Highlight1)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snhl1)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hb1;"></td>
+
+                                                                           </tr>
+
+                                                                           <tr>
+                                                                               <td style="height: 40px; width: 50px; ">2.</td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Body2)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBody2)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hr2;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Border2)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBorder2)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hg2;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Highlight2)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snhl2)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hb2;"></td>
+                                                                           </tr>
+
+                                                                           <tr>
+                                                                               <td style="height: 40px; width: 50px; ">3.</td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Body3)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBody3)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hr3;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Border3)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snBorder3)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hg3;"></td>
+                                                                               <td>@Html.DisplayFor(Model => Model.Highlight3)</td>
+                                                                               <td style="height: 40px; width: 100px;">@Html.DisplayFor(Model => Model.snhl3)</td>
+                                                                               <td style="height: 40px; width: 100px; background-color: @Model.hb3;"></td>
+                                                                           </tr>
+                                                                       </table>
+
+
+                                                                       <table style="font-family:Arial;font-size:13px;font-weight:300">
+                                                                           <tr style="height:20px;">
+                                                                               <td> <b>Special request</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.SpecialRequest)</td>
+
+
+                                                                           </tr>
+
+                                                                           <tr style="height:20px;">
+                                                                               <td><b>InSy Remarks</b></td>
+                                                                               <td>: @Html.DisplayFor(Model => Model.remarks)</td>
+
+                                                                           </tr>
+                                                                       </table>
+                                                                       @*<div class="task high">
+            <div class="desc">
+                <div>&nbsp; <b>Special request </b> : @Html.DisplayFor(Model => Model.SpecialRequest) </div>
+            </div>
+        </div>
+        <div class="task high">
+            <div class="desc">
+                <div>&nbsp; <b>InSy Comments </b> : @Html.DisplayFor(Model => Model.InsyComments) </div>
+            </div>
+        </div>*@
+
+                                                                       @*<button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("DealersList", "TSO")'">
+            <span class="glyphicon glyphicon-backward"></span>&nbsp;Back to DealersList
+        </button>*@
+                                                                       <div>
+                                                                           @if (Model.coloursused != null && Model.coloursused.Count > 0)
+                                                                           {
+                                                                               <table style="color:RGB(230,45,95);font-size:14px;"><tr><td>Colours Used</td><tr></table>
+                                                                               @*<h4 style="color:RGB(230,45,95);">&nbsp;Colour Choices</h4>*@
+                                                                               <table style="font-family: Arial; font-size: 14px; font-weight: 300; border-collapse: separate; border-spacing: 13px 5px;">
+                                                                                   <tr style="height:20px;">
+                                                                                       <td style="height:40px;width:50px;"></td>
+                                                                                       <td><b>Option</b></td>
+
+                                                                                       <td><b>Group</b></td>
+                                                                                       <td><b>ShadeCode</b></td>
+                                                                                       <td><b>ShadeName</b></td>
+
+                                                                                       <td><b>Colour of the code</b></td>
+
+                                                                                   </tr>
+
+                                                                                   @foreach (var asset in Model.coloursused)
+                                                                                   {
+                                                                                       <tr style="height:20px;">
+                                                                                           <td style="height:40px;width:50px;"></td>
+                                                                                           <td><b>@asset.Option</b></td>
+
+                                                                                           <td><b>@asset.Group</b></td>
+                                                                                           <td><b>@asset.ShadeCode</b></td>
+                                                                                           <td><b>@asset.ShadeName</b></td>
+
+
+                                                                                           <td style="height: 40px; width: 100px;background-color: @asset.hexacode;"></td>
+
+                                                                                       </tr>
+                                                                                   }
+                                                                               </table>
+                                                                           }
+                                                                       </div>
+                                                                       <div class="clearfix"></div>
+                                                                   </div>
+                                                                   </div>
+                                                               </div>
+    </div>
+</body>
+</html>
+
+

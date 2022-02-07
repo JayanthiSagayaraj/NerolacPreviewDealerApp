@@ -1,0 +1,149 @@
+﻿@model NerolacPreviewApp.Models.projectsupdate
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Projects Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+<title> MyViz15 - Projects Update </title>
+<html>
+<head>
+
+     
+            <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+            <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+            <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+            <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+            <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+            <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+   
+    <style>
+        .span1 {
+            padding-top: 70px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+            padding-left: 10px;
+            /*width:200px;*/
+        }
+
+        .td1 {
+            width: 100px;
+        }
+
+        .td {
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container page-todo bootstrap snippets bootdeys">
+        <div class="col-sm-12 tasks" style="font-weight:bold;">
+            <br />
+            <div class="task-list" style="background: #fff; height: 500px; border: solid 2px;">
+                <div class="task-list" style="background: #fff; height: 480px; margin: 10px;  ">
+                   
+                        <p style="float:right;display:inline"><a href='@Url.Action("AllLevelsDashboard", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+                    
+                    <form class="form-inline">
+                        <div>
+
+                            <label for="search">ProjectID</label>
+                            <input type="text" name="search" id="search" />
+                            <input type="button" class="btn btn-primary" style="width:120px;height:30px;font-size:12px;" id="btnsearch" value="Search" onclick="searchproid();">
+                            <br />
+                            <label id="lblmsg" value="" style="color:red;"></label>
+                            <br />
+                            <br />
+                            <br />
+
+                            <div><input type="button" class="btn btn-primary" style="width:120px;height:30px;font-size:12px;" id="btnupdate" value="Update" onclick="updateproid();" disabled></div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        
+<script type="text/javascript">
+            function searchproid() {
+                $(function () {
+
+                    var ProjectID = document.getElementById("search").value;
+
+                $.ajax({
+                        type: 'GET',
+            url: '@Url.Action("GetprojectID", "TSO")',
+                    data: { "ProjectID": ProjectID },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                if (data != '') {
+                    $('#btnupdate').prop('disabled', false);
+                    $('#lblmsg').text("");
+                }
+                else {
+                    $('#btnupdate').prop('disabled', true);
+                    $('#lblmsg').text("Invalid Project ID!");
+                }
+
+            },
+            error: function (emp) {
+                alert('error');
+            }
+                    });
+            });
+    };
+    //function updateproid() {
+    //    $(function () {
+
+    //        var url = "/TSO/updateprostatus";
+    //        var PID = $("#search").val();
+
+    //        $.post(url, { PID: PID }, function (data) {
+    //            alert(data);
+    //            document.getElementById("search").value = '';
+    //            $('#btnupdate').prop('disabled', true);
+    //        });
+    //    });
+    //};
+    
+    function updateproid() {
+                $(function () {
+
+                    var ProjectID = document.getElementById("search").value;
+
+                $.ajax({
+                        type: 'POST',
+            url: '@Url.Action("updateprostatus", "TSO")',
+                    data: { "PID": ProjectID },
+                    dataType: 'json',
+                    success: function (result) {
+                        $('#lblmsg').text("updated successfully!");
+
+                        $('#btnupdate').prop('disabled', true);
+                    },
+                    error: function (emp) {
+                        $('#lblmsg').text("updated successfully!");
+                        document.getElementById("search").value = '';
+                        $('#btnupdate').prop('disabled', true);
+                    }
+                             
+                    });
+            });
+    };
+</script>
+        }
+</body >
+</html >
+

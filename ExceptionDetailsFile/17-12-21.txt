@@ -1,0 +1,96 @@
+-----------Exception Details on  17-12-2021 09:42:59 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 17-12-2021 09:42:59 AM
+
+Error Line No : ine 303
+
+Error Message: DirectoryNotFoundException
+
+Exception Type: System.IO.DirectoryNotFoundException
+
+Error Location : Could not find a part of the path 'C:\Program Files (x86)\IIS Express\~\TempImage\LogFile.txt'.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  17-12-2021 09:44:16 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 17-12-2021 09:44:16 AM
+
+Error Line No : ine 303
+
+Error Message: DirectoryNotFoundException
+
+Exception Type: System.IO.DirectoryNotFoundException
+
+Error Location : Could not find a part of the path 'C:\Program Files (x86)\IIS Express\~\TempImage\LogFile.txt'.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  17-12-2021 09:46:08 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 17-12-2021 09:46:08 AM
+
+Error Line No : ine 303
+
+Error Message: DirectoryNotFoundException
+
+Exception Type: System.IO.DirectoryNotFoundException
+
+Error Location : Could not find a part of the path 'C:\Program Files (x86)\IIS Express\~\TempImage\LogFile.txt'.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  17-12-2021 11:52:59 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 17-12-2021 11:52:59 AM
+
+Error Line No : ine 372
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : Unknown column 'projectd' in 'where clause'
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

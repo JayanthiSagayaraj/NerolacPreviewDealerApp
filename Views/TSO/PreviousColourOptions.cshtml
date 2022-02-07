@@ -1,0 +1,258 @@
+﻿@model PagedList.IPagedList<NerolacPreviewApp.Models.PreviousColourOptions>
+
+@{
+    ViewBag.Title = "PreviosColourOptions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string currentFilter = ViewBag.CurrentFilter;
+    string currentSort = ViewBag.CurrentSort;
+    if (string.IsNullOrEmpty(currentSort))
+    {
+        currentSort = "PreviousColourOptions";
+    }
+}
+@using PagedList.Mvc
+<!DOCTYPE html>
+
+<html>
+<head>
+    <div class="wrapper">
+        <meta name="viewport" content="width=device-width" />
+        <title> MyViz - ColourPalette </title>
+        <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+</head>
+<body>
+    <div class="col-md-1">
+
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-6" style="width:100%;">
+            @*@if (Session["Userlevel"].ToString() == "1")
+                {
+                    <p style="float:right;display:inline"><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+                }
+                else
+                {
+                    <p style="float:right;display:inline"><a href='@Url.Action("AllLevelsDashboard", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+                }*@
+
+            <div class="search-box">
+                <form class="form-inline">
+
+                    @*<div class="form-group">
+                            <input type="text" name="q" value="@ViewBag.searchQuery" class="search-text form-control" placeholder="Search..." title="Search relevant details in the grid" data-toggle="tooltip" id="searchtxt" />
+
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>*@
+                    @*<button type="submit" class="btn btn-primary" id="btnClear" onserverclick="Is" runat="server">Clear</button>*@
+                    <!--&nbsp; &nbsp; &nbsp;
+                    <a href="@Url.Action("Index_Post","TSO")">Export to excel</a>-->
+                    @*<button type="submit" class="btn btn-primary" id="excel">Export to Excel</button>*@
+
+                    <!--&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-->
+
+
+
+
+                </form>
+            </div>
+        </div>
+        </br>
+        <div class="col-md-1">
+
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:25px">
+        @*<p style="padding-left: 15px; font-size: 12px;">Sort is possible on blue title.</p>*@
+        <div class="col-md-12">
+            <div class="panel panel-primary list-panel" style="display: inline-block; width: 100%;" id="list-panel">
+                <div class="panel-heading list-panel-heading" style="width:100%;">
+                    <h1 class="panel-title list-panel-title">Previous Colour Options</h1>
+                </div>
+                <div class="panel-body" style="width: 100%;position: relative">
+                    @*<div style="width: 100%; overflow: auto; overflow-x: visible; margin-top: 20px; ">*@
+                    <div id="dvData" style="width: 100%; height:400px;">
+                        <div style="width:100%;height:400px;overflow:scroll;">
+                            <table id="assets-data-table" class="table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Option1</th>
+                                        <th>Option2</th>
+                                        <th>Option3</th>
+                                        <th style="white-space: nowrap; position: sticky;width:0.12%;" hidden>
+                                            RSN
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            ProjectID
+
+                                        </th>
+
+
+
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            OptionNo
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Colour
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Colour
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Code
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Name
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky; width: 0.12%;">
+                                            Colour
+
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var asset in Model)
+                                    {
+                                        <tr style="font-size:12px;height:1px;">
+                                            <td>
+                                                <input onclick="ckBox1(this)" class="options" type="checkbox" value="@asset.RSN" name="Option1" />
+                                            </td>
+                                            <td>
+                                                <input onclick="ckBox2(this)" class="options" type="checkbox" value="@asset.RSN" name="Option2" />
+                                            </td>
+                                            <td>
+                                                <input onclick="ckBox3(this)" class="options" type="checkbox" value="@asset.RSN" name="Option3" />
+                                            </td>
+
+                                            <td style="font-size:12px;height:2px;" hidden>
+                                                <nobr>@asset.RSN</nobr>
+                                            </td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Projectid</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Optionno</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code1</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name1</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;padding-left:150px; background-color:@asset.hcode1;"><nobr></nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code2</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name2</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;padding-left:150px; background-color:@asset.hcode2;"><nobr></nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.code3</nobr></td>
+                                            <td style="font-size:12px;height:2px;"><nobr>@asset.Name3</nobr></td>
+
+                                            <td style="font-size:12px;height:2px;padding-left:150px; background-color:@asset.hcode3;"><nobr></nobr></td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*@if (Model.PageCount > 1)
+                {
+                    <div class="pager">
+                        @Html.PagedListPager(Model, page => Url.Action("Active_InActiveUserDetails", new
+                                       {
+                                           page,
+                                           sortOrder = ViewBag.currentSort,
+                                           q = ViewBag.searchQuery
+                                       }))
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                }*@
+        </div>
+    </div>
+    @*</div>*@
+   
+    <button type='reset' class='btn btn-danger' onclick="window.history.go(-1);"><i class='fa fa-ban'></i> Select </button>
+    @section Scripts
+        {
+
+        <script type="text/javascript">
+                $("#btnClear").click(function () {
+                    $("#searchtxt").val('');
+                    $("#btnClear").val("");
+                    window.location.href = '@Url.Action("PreviousColourOptions", "TSO")';
+                });
+
+            function ckBox1(e) {
+                debugger;
+                /*if ($(this).prop('checked')) {*/
+                if (!this.checked) {
+                    var grid = document.getElementById("assets-data-table");
+                    var checkBoxes = grid.getElementsByTagName("INPUT");
+                    for (var i = 0; i < checkBoxes.length; i++) {
+                        if (checkBoxes[i].checked) {
+                            var row = checkBoxes[i].parentNode.parentNode;
+                            alert(row.cells[1].innerHTML);
+                            '<%Session["code1opt1"] = "' + row.cells[6].innerHTML + '"; %>';
+                            alert('<%=Session["code1opt1"] %>');
+                            //@Session["code1opt1"]=row.cells[6].html;
+                        }
+                    }
+                    //var columns = $(this).closest('tr').find('td:not(:first-child)');
+                    //$(columns).each(function (index) {
+                    //    console.log("Column " + (index + 1) + " has value " + $(this).text());
+                    //});
+                }
+                //alert('Already you are selected 3 options!' + $(this).closest('tr').find('td:last-child').html());
+                
+    }
+        
+        
+                ////$("#options input:checkbox").on('change', function () {
+                ////    if (!$(this).is(":checked")) {
+                ////        var numberOfChecked = $('input:checkbox:checked').length;
+                ////        if (numberOfChecked > 3) {
+                ////            alert('Already you are selected 3 options!');
+                ////            $(this).prop("checked", false);
+                ////        }
+
+                ////    }
+                ////});
+
+        </script>
+    }
+
+</body>
+</html>
+
+
+
+

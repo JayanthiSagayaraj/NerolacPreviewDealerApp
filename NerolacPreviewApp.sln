@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NerolacPreviewApp", "NerolacPreviewApp.csproj", "{54A1D18C-180B-4E39-B4BC-76196BD9505C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54A1D18C-180B-4E39-B4BC-76196BD9505C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54A1D18C-180B-4E39-B4BC-76196BD9505C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54A1D18C-180B-4E39-B4BC-76196BD9505C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54A1D18C-180B-4E39-B4BC-76196BD9505C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04D747B2-486F-4079-8A1C-96F0D279A2FE}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,450 @@
+﻿@model PagedList.IPagedList<NerolacPreviewApp.Models.TSODashboard>
+@{
+    ViewBag.Title = "All Level TSO DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string currentFilter = ViewBag.CurrentFilter;
+    string currentSort = ViewBag.CurrentSort;
+    string projectids = "";
+    if (string.IsNullOrEmpty(currentSort))
+    {
+        currentSort = "ProjectID_desc";
+    }
+
+}
+@using PagedList.Mvc
+@if (TempData["message"] != null)
+{
+    <script>alert('@TempData["message"]');</script>
+}
+
+<style>
+    .btn2 {
+        border-radius: 50%;
+        color: orangered !important;
+        border-color: purple !important;
+        background-color: purple !important;
+    }
+
+    .btn3 {
+        border-radius: 50%;
+        color: darkgreen !important;
+        border-color: skyblue !important;
+        background-color: skyblue !important;
+    }
+
+    .buttons {
+        border-radius: 50%;
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title> MyViz1 -All Level TSO Dashboard </title>
+    <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <div class="wrapper">
+        <div id='myModal' class='modal'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="height:70px;">
+                        <h3 style="color:red;margin-left:15px;display:inline;">Nerolite Profile</h3>
+                        <a href="#" id="clsBtn" class="close" data-dismiss="modal" style="display: inline;">&times;</a>
+                    </div>
+                    <div class="modal-body" id="myModalBodyDiv1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <div class="col-md-3"><b>MyViz1 - Preview Dashboard</b></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                @*<b>
+                    PRI (@ViewBag.PRI)
+                </b>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>
+                    SI (@ViewBag.SI)
+                </b>*@
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-5" style="width:600px;">
+                @*@if (@ViewBag.AllowNewProject == "" | @ViewBag.AllowNewProject == "NO")
+        {
+        <marquee width="40%" direction="up" height="15px" scrolldelay="1000">
+            <p style="color:red"><b>@Session["DisallowMessage"].ToString()</b></p>
+        </marquee>
+        }
+        else
+        {*@
+                <button type="button" class="btn btn-primary btn-md" onserverclick="Is" runat="server" data-toggle="tooltip" title="Click to Submit an Image for Preview Services" data-placement="bottom"
+                        id="btnAdd">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Add New Project
+                </button>
+                @*}*@
+
+                <a href="#" class="btn btn-dark buttons" onclick="myProfile()" data-toggle="tooltip" data-placement="bottom" title="My Profile"><i class="glyphicon glyphicon-user"></i></a>
+                <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false" style="width:700px;margin-left:285px;margin-top:100px;">
+                    <div class="modal-dialog" style="width:700px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a href="#" id="clsBtn" class="close" data-dismiss="modal" style="color:red;margin-left:255px;">&times;</a>
+                            </div>
+                            <div class="modal-body" id="myModalBodyDiv1">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                @*<a href="#" class="btn btn-dark buttons" onclick="statsCount()" data-toggle="tooltip" data-placement="bottom" title="Statistics"><i class="glyphicon glyphicon-th-list"></i></a>*@
+                <a href="#" class="btn btn-dark buttons" onclick="feedback()" data-toggle="tooltip" data-placement="bottom" title="Click to provide your valuable FEEDBACK"><i class="glyphicon glyphicon-send"></i></a>
+                <a href="#" class="btn btn-dark buttons" onclick="dealerslist()" data-toggle="tooltip" data-placement="bottom" title="Dealers List"><i class="glyphicon glyphicon-tags"></i></a>
+                <a href="#" class="btn btn-dark buttons" onclick="Active_InActiveUserDetails()" data-toggle="tooltip" data-placement="bottom" title="MyViz_Usage"><i class="glyphicon glyphicon-book"></i></i></a>
+                <a href="#" class="btn btn-dark buttons" onclick="ColourPalette()" data-toggle="tooltip" data-placement="bottom" title="Colour Palette"><img src="~/Images/color-icons-12533-Windows.ico" height="22" width="22"></></a>
+                <a href="#" class="btn btn-dark buttons" onclick="RecomComb()" data-toggle="tooltip" data-placement="bottom" title="RecommendedCombinations"><img src="~/Images/clipart2779223.ico" height="22" width="22"></></a>
+                <a href="#" class="btn btn-dark buttons" onclick="help()" data-toggle="tooltip" data-placement="bottom" title="Get Help"><i class="glyphicon glyphicon-header"></i></a>
+                <a href="#" class="btn btn-dark buttons" onclick="projectsupdate()" data-toggle="tooltip" data-placement="bottom" title="Projectsupdate">
+                    <i class="glyphicon glyphicon-check">
+                        @if (Session["help"].ToString() == "1")
+                        {
+                            <span style="float:right;"><img src="~/Images/tnew5_e0.gif" alt="this slowpoke moves" width="30" /></span>
+                        }
+                    </i>
+                </a>
+
+                <div class="modal fade" id="myModal2" data-backdrop="static" data-keyboard="false" style="width:500px;margin-left:285px;margin-top:45px;">
+                    <div class="modal-dialog" style="width:500px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a href="#" id="clsBtn" class="close" data-dismiss="modal" style="color:red;margin-left:255px;">&times;</a>
+
+                            </div>
+                            <div class="modal-body" id="myModalBodyDiv2">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle"><b>Registering a new project?</b></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Ensure the Image files meet the guidelines, else they may not give the best output.<br />
+                                If you wish to check again, press ‘Return’ else press ‘Go’.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
+                                <button type="button" class="btn btn-primary" id="btnGo">Go</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle"><b>Project Expired !</b></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Sorry! The Project Expired on <b>@Session["ProjectExpiryDate"].ToString()</b> as it is more than 90 days old. In case required to extend the Expiry Date, contact MyVizSupport Team.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+            </div>
+
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-6" style="width:400px;">
+                <div class="search-box">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="text" name="q" value="@ViewBag.searchQuery" class="search-text form-control" placeholder="Search..." title="Search relevant details in the grid" data-toggle="tooltip" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit" class="btn btn-primary" id="btnClear" onserverclick="Is" runat="server">Clear</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        @if (!string.IsNullOrEmpty(Session["NWH"] as string))
+                        {
+                            <marquee width="30%" direction="up" height="15px" scrolldelay="1000">
+                                <p style="color:red"><b> @Session["NWH"].ToString()</b></p>
+                            </marquee>
+                            @*<label style="border:groove;width: 150px;height: 28px;text-align: center;">  </label>*@
+                        }
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:25px">
+            <div class="col-md-12">
+                <div class="panel panel-primary list-panel" id="list-panel">
+                    <div class="panel-heading list-panel-heading">
+                        <h1 class="panel-title list-panel-title">Nerolite DashBoard</h1>
+                    </div>
+                    <div class="panel-body" style="position:relative;">
+                        <table id="assets-data-table" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.ActionLink("ProjectID", "AllLevelsDashboard", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.ProjectIDSortParam))
+                                        @Html.SortIdentifier(currentSort, "ProjectID")
+                                    </th>
+                                    <th>Project Name</th>
+                                    <th>Nerolite ID</th>
+                                    <th>Customer</th>
+                                    <th>Site</th>
+                                    <th>
+                                        @Html.ActionLink("Status", "AllLevelsDashboard", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.StatusSortParam))
+                                        @Html.SortIdentifier(currentSort, "Status")
+                                    </th>
+                                    <th>
+                                        Status Date
+                                    </th>
+                                    @*<th>
+                        @Html.ActionLink("CaseID", "Index", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.CaseIDSortParam))
+                        @Html.SortIdentifier(currentSort, "CaseID")
+                    </th>*@
+                                    @*<th>Expires On</th>*@
+                                    <th>
+                                        <div data-toggle="tooltip" data-placement="top" title="Link will be enabled when the Preview is ready.">VizOption</div>
+                                    </th>
+                                    <th>BizStatus</th>
+                                    <th>ColourChoices</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var asset in Model)
+                                {
+                                    //int daysLeft = (asset.ProjectExpiryDate - DateTime.Today).Days;
+                                    //string style = daysLeft <= 7 ? "color:#E92155" : null;
+                                <tr>
+                                    @*<tr style="@style">*@
+                                    <td>
+                                        <a data-value="@asset.ProjectID"
+                                           href="~/TSODashboardDetails/Index?ProjectID=@asset.ProjectID" data-id="@asset.ProjectID" title="Click here to view project details" data-toggle="tooltip">@asset.ProjectID</a>
+                                    </td>
+                                    <td>
+                                        @*@asset.ProjectName*@
+                                        <a data-value="@asset.ProjectName"
+                                           href="~/ProjectNameDetails/Index?ProjectID=@asset.ProjectID" data-id="@asset.ProjectID" title="Click here to view project images" data-toggle="tooltip">@asset.ProjectName</a>
+                                    </td>
+                                    <td>@asset.UserID</td>
+                                    <td>@asset.CustomerName</td>
+                                    <td>@asset.SiteAddress</td>
+                                    <td>
+                                        <a data-value="@asset.Wstatus"
+                                           href="~/TSODashboard/myModal?Id=@asset.ProjectID" class="anchorDetail" data-id="@asset.ProjectID" title="Project Status log" data-toggle="tooltip">@asset.Wstatus</a>
+                                    </td>
+                                    <td>@asset.WstatusDate.ToString("ddd, dd MMM hh:mm tt")</td>
+
+
+                                    @*@if (Convert.ToDateTime(@asset.ProjectExpiryDate) == Convert.ToDateTime(@asset.curdate))
+        {
+            <td>
+
+                <a data-target="" data-value="@asset.VizOption"
+                   href="" data-toggle="modal" style="color:crimson">@asset.VizOption </a>
+            </td>
+        }
+        else*@
+                                    @if ((@asset.Workstatus == 50 | @asset.Workstatus == 60 | @asset.Workstatus == 70 | @asset.Workstatus == 80) && (@asset.ProjectExpiryDate) != "NA" && Convert.ToDateTime(@asset.ProjectExpiryDate) < Convert.ToDateTime(@asset.curdate))
+                                    {
+                                        <td>
+                                            <a data-target="" data-value="@asset.VizOption"
+                                               href="" data-toggle="modal" style="color:crimson" title="Project Expired !Sorry! The Project Expired on @Convert.ToDateTime(@asset.ProjectExpiryDate) as it is more than 90 days old. In case required to extend the Expiry Date, contact MyVizSupport Team. ">@asset.VizOption </a>
+                                        </td>
+
+
+                                    }
+                                    else if ((@asset.Workstatus == 50 | @asset.Workstatus == 60 | @asset.Workstatus == 70 | @asset.Workstatus == 80) && (@asset.ProjectExpiryDate) != "NA" && Convert.ToDateTime(@asset.ProjectExpiryDate) > Convert.ToDateTime(@asset.curdate))
+                                    {
+                                        <td>
+                                            <a data-value="@asset.VizOption"
+                                               href="~/TSODashboard/PreviewAlbum?Id=@asset.ProjectID" title="Click to open Preview Album" data-toggle="tooltip" style="color:limegreen">@asset.VizOption</a>
+                                        </td>
+                                    }
+                                    else if (@asset.Workstatus == 90 | @asset.Workstatus == 95 | @asset.Workstatus == 99)
+                                    {
+                                        <td style="color:crimson">@asset.VizOption</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@asset.VizOption</td>
+
+                                    }
+                                    @*<td>@asset.ProjectExpiryDate</td>*@
+                                    <td>
+                                        <a data-value="@asset.Bstatus"
+                                           href="~/TSO/BizStatus?proId=@asset.ProjectID" data-id="@asset.ProjectID" title="Click here to update business status" data-toggle="tooltip">@asset.Bstatus</a>
+                                    </td>
+                                  
+                                    
+                                        <td>
+                                            <a data-value="ColourChoices"
+                                               href="~/TSO/ColourChoices?ProjectID=@asset.ProjectID" data-id="@asset.ProjectID" title="Click here to view project colour choices.Red = No color choices." data-toggle="tooltip">ColourChoices</a>
+                                        </td>
+
+                                   
+
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                        @if (Model.PageCount > 1)
+                        {
+                            <div class="pager">
+                                @Html.PagedListPager(Model, page => Url.Action("AllLevelsDashboard", new
+                                               {
+                                                   page,
+                                                   sortOrder = ViewBag.currentSort,
+                                                   q = ViewBag.searchQuery
+                                               }))
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            @*<p style="font-size:11px;">
+            Disclaimer - MyViz does its best to provide a best match of colours with the Shade Cards.
+            However, factors such as viewing medium, screen size & resolution, source quality, lighting, shades selected etc. can also impact.
+        </p>*@
+            <p style="font-size:12px;">
+                Source Image must be atleast 1280x1024 Pixels, Size>500KB,lesser than 10MB, Good Lighting,Proper View of the building.
+                Avoid images that have too many obstructions, ambiguities, too many shadows, too small an object, photo of photo etc.
+                Source images that do not meet these criteria, may not produce good Previews. Please refer to detailed guidelines.
+                WhatsApp compresses the images affecting the resolution.
+
+            </p>
+            <p style="color: red; font-size: 12px;">
+                1.Click VizOption to Visualise own colours. 2.Click Project Name to view Submitted Images.
+            </p>
+        </footer>
+
+        @section Scripts
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".btu9u9un-success").mouseover(function () {
+                        $(this).attr("title", "MyProfile");
+                    });
+                    $(".btn-info").mouseover(function () {
+                        $(this).attr("title", "Status");
+                    });
+                    $(".btn2").mouseover(function () {
+                        $(this).attr("title", "Feedback");
+                    });
+                    $(".btn2").mouseover(function () {
+                        $(this).attr("title", "DealersList");
+                    });
+                    $(".btn3").mouseover(function () {
+                        $(this).attr("title", "Help");
+                    });
+                    // $('#assets-data-table').DataTable();
+                    $('[data-toggle="tooltip"]').tooltip();
+                    $("#clsBtn").mouseover(function () {
+                        $(this).attr("title", "Close");
+                    });
+                    $(".Close").mouseover(function () {
+                        $(this).attr("title", "Close");
+                    });
+                });
+                $("#clsBtn").mouseover(function () {
+                    $(this).attr("title", "Close");
+                });
+                var statsCount = function () {
+                    var url = '@Url.Action("statsCount", "TSO")';
+                    $("#myModalBodyDiv2").load(url, function () {
+                        $("#myModal2").modal("show");
+                        $("#clsBtn").mouseover(function () {
+                            $(this).attr("title", "Close");
+                        });
+                    })
+                }
+            </script>
+            <script type="text/javascript">
+            $("#btnClear").click(function(){
+                    $("#btnClear").val("");
+                    window.location.href = '@Url.Action("Index", "TSODashboard")';
+            });
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            $("#btnAdd").click(function(){
+            window.location.href = '@Url.Action("NewRequestRegistration", "TSO")';
+            });
+            });
+                var feedback = function () {
+            window.location.href = '@Url.Action("feedback", "TSO")';
+                };
+                var dealerslist = function () {
+                    window.location.href = '@Url.Action("DealersList", "TSO")';
+                };
+                var Active_InActiveUserDetails = function () {
+                    window.location.href = '@Url.Action("Active_InActiveUserDetails", "TSO")';
+                };
+                var ColourPalette = function () {
+                    window.location.href = '@Url.Action("ColourPalette", "TSO")';
+                };
+                var RecomComb = function () {
+                    window.location.href = '@Url.Action("RecommendedCombinations", "TSO")';
+                };
+              var help = function () {
+            window.location.href = '@Url.Action("Help", "TSO")';
+                };
+                var projectsupdate = function () {
+            window.location.href = '@Url.Action("Projectsupdate", "TSO")';
+            };
+
+                 var myProfile = function () {
+
+
+        var url = '@Url.Action("myProfile", "TSO")';
+
+        $("#myModalBodyDiv1").load(url, function () {
+            $("#myModal1").modal("show");
+            $("#clsBtn").mouseover(function () {
+                $(this).attr("title", "Close");
+            });
+        })
+    }
+
+            </script>
+        }
+    </div>
+</body>
+</html>
+

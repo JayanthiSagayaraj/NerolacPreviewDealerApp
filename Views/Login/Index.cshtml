@@ -1,0 +1,450 @@
+﻿@model NerolacPreviewApp.Models.Login
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml"; }
+<script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="Content/Site.css">
+<style type="text/css">
+     @@import url('https://fonts.googleapis.com/css?family=Numans');
+
+     html, body {
+
+         background-size: cover;
+         background-repeat: no-repeat;
+         height: 100%;
+         font-family: 'Numans', sans-serif;
+     }
+
+    .modal-footer {
+        border-top: 0px;
+    }
+
+    .clslogo {
+        width: 435px;
+        height: 450px;
+        /*        background-image: url(MyViz/Images/logo-01.jpg);*/
+        /*background-image: url('../../Images/colour-my-space-logo.jpg');*/
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    #content {
+        position: relative;
+    }
+
+        #content img {
+            position: absolute;
+            top: -141px;
+            left: 585px;
+            width: 400px;
+            height: 150px;
+        }
+
+
+     *{
+         box-sizing: border-box;
+     }
+
+     /* Create two equal columns that floats next to each other */
+     .column {
+         float: left;
+         width: 50%;
+         padding: 10px;
+         height: 500px; /* Should be removed. Only for demonstration */
+     }
+
+     /* Clear floats after the columns */
+     .row:after {
+         content: "";
+         display: table;
+         clear: both;
+     }
+
+     .container {
+         height: 100%;
+         align-content: center;
+         padding-top: 25px;
+     }
+
+    .card {
+        /*margin-left: 100px;*/
+        height: 300px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 400px;
+        background-color: #1E2F61;
+        border-radius: 0.25rem;
+        margin-right: 325px;
+    }
+
+     .social_icon span {
+         font-size: 60px;
+         margin-left: 10px;
+         color: #FFC312;
+     }
+
+     .form-control {
+         display: initial !important;
+     }
+
+     .social_icon span:hover {
+         color: white;
+         cursor: pointer;
+     }
+
+     .card-header h3 {
+         color: white;
+     }
+
+     .social_icon {
+         position: absolute;
+         right: 20px;
+         top: -45px;
+     }
+
+     .input-group-prepend {
+         width: 50px;
+         background-color: #FFC312;
+         color: black;
+         border: 0 !important;
+         display: initial !important;
+     }
+
+     input:focus {
+         outline: 0 0 0 0 !important;
+         box-shadow: 0 0 0 0 !important;
+     }
+
+     .remember {
+         color: white;
+     }
+
+         .remember input {
+             width: 20px;
+             height: 20px;
+             margin-left: 15px;
+             margin-right: 5px;
+         }
+
+     .login_btn {
+         color: black;
+         background-color: #FFC312;
+         width: 100px;
+     }
+
+         .login_btn:hover {
+             color: black;
+             background-color: white;
+         }
+
+     .links {
+         color: white;
+     }
+
+         .links a {
+             margin-left: 4px;
+         }
+
+     .card-body {
+         -ms-flex: 1 1 auto;
+         flex: 1 1 auto;
+         padding: 1.25rem;
+     }
+
+
+     .card-header {
+         padding: 0.75rem 1.25rem;
+         margin-bottom: 0;
+         background-color: rgba(0, 0, 0, 0.03);
+         border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+     }
+
+     *, *::before, *::after {
+         box-sizing: border-box;
+     }
+
+     .card-footer {
+         padding: 0.75rem 1.25rem;
+         background-color: rgba(0, 0, 0, 0.03);
+         border-top: 1px solid rgba(0, 0, 0, 0.125);
+     }
+
+
+     .input-group-prepend span {
+         width: 50px;
+         background-color: #FFC312;
+         color: black;
+     }
+
+     .input-group-text {
+         display: -ms-flexbox;
+         display: flex;
+         padding: 2px;
+         -ms-flex-align: center;
+         align-items: center;
+         border-radius: 0.25rem;
+         margin-bottom: 0;
+         font-size: 1rem;
+         font-weight: 400;
+         line-height: 1.5;
+         color: #495057;
+         text-align: center;
+         white-space: nowrap;
+         background-color: #e9ecef;
+         border: 1px solid #ced4da;
+         border-radius: 0.25rem;
+         /* padding: 0.375rem 0.75rem;*/
+     }
+
+     .input-group {
+         position: relative;
+         /*-ms-flex: 1 1 auto;
+         flex: 1 1 auto;*/
+         width: 200%;
+         height: 35px;
+         margin-bottom: 15px;
+         float: left;
+         display: inline-flex;
+         border-radius: 0.25rem;
+     }
+
+     i {
+         width: 32px;
+         /* height: 32px; */
+         padding: 5px;
+         font-size: 20px;
+         border-radius: 0.25rem;
+     }
+
+     login_btn .float-right {
+         float: right !important;
+     }
+
+     .input-group-prepend span {
+         border-radius: 0.25rem;
+     }
+
+     .form-control {
+         border-radius: 0.25rem;
+     }
+
+     .example1 {
+         height: 50px;
+         overflow: hidden;
+         position: relative;
+     }
+
+         .example1 h3 {
+             font-size: 3em;
+             color: #E92155;
+             position: absolute;
+             width: 100%;
+             height: 100%;
+             margin: 0;
+             line-height: 50px;
+             text-align: center;
+             /* Starting position */
+             -moz-transform: translateX(100%);
+             -webkit-transform: translateX(100%);
+             transform: translateX(100%);
+             /* Apply animation to this element */
+             -moz-animation: example1 15s linear infinite;
+             -webkit-animation: example1 15s linear infinite;
+             animation: example1 15s linear infinite;
+         }
+
+     @@-moz-keyframes example1 {
+     0%   { -moz-transform: translateX(100%); }
+     100% { -moz-transform: translateX(-100%); }
+     }
+
+     @@-webkit-keyframes example1 {
+     0%   { -webkit-transform: translateX(100%); }
+     100% { -webkit-transform: translateX(-100%); }
+     }
+
+     @@keyframes example1 {
+     0%   {
+     -moz-transform: translateX(100%); /* Firefox bug fix */
+     -webkit-transform: translateX(100%); /* Firefox bug fix */
+    transform: translateX(100%);
+    }
+    100% {
+    -moz-transform: translateX(-100%); /* Firefox bug fix */
+    -webkit-transform: translateX(-100%); /* Firefox bug fix */
+     transform: translateX(-100%);
+    }
+    }
+
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#UserId").focus();
+        $("#Password").keypress(function (e) {
+            var key = e.which;
+            if (key == 13) {
+                $("#BtnLogin").click();
+                return false;
+            }
+        });
+
+        /*Button click event code as below*/
+        $("#FrmLogin").submit(function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+           var UserId = $("#UserId").val();
+           var Password = $("#Password").val();
+           var UserCategory = "";
+           var UserLevel = "";
+            var IsNewUser = "";
+
+            if (UserId != "" && Password != "") {
+
+                $.ajax({
+                    url: "@Url.Action("UserLogin","Login")",
+                    type: 'Post',
+                    dataType: "json",
+                    data: {
+                        jsUserId: UserId,
+                        jsPassword: Password,
+                        jsUserCategory: UserCategory,
+                        jsUserLevel: UserLevel,
+                        jsIsNewUser: IsNewUser
+                    },
+                    success: function (data) {
+                        var val = 0;
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].UserId == UserId && data[i].Password == Password) {
+                                val = 1;
+                                if (data[i].IsNewUser == "true") {
+                                    window.location.href = '@Url.Action("ChangePassword", "ChangePassword")';
+
+                                }
+                                else if (data[i].UserCategory == "1DLR") {
+                                    window.location.href = "@Url.Action("Index", "TSODashboard")";
+
+
+                                }
+                               
+                                else
+                                {
+                                    alert('Please check the UserId and Password');
+                                    $("#UserId").focus();
+                                }
+                            }
+                        }
+                        if (val == 0) {
+                            alert('Please check the UserId and Password');
+                            $("#UserId").focus();
+                        }
+                    },
+                    error: function (x, e) {
+                        alert("The call to the server side failed. " + x.responseText);
+                    }
+                });
+                return false;
+
+            }
+            else {
+                alert('Please Enter Username and Password !');
+                $("#UserId").focus();
+            }
+       });
+
+    });
+    $(document).ready(function () {
+        $('#show_password').hover(function show() {
+            //Change the attribute to text  
+            $('#Password').attr('type', 'text');
+            $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        },
+            function () {
+                //Change the attribute back to password  
+                $('#Password').attr('type', 'password');
+                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+            });
+        
+    });  
+</script>
+<form id="FrmLogin">
+    <div class="container mt-5">
+        @if (!string.IsNullOrEmpty(Session["NWH"] as string))
+        {
+            <div class="example1">
+                <h3>@Session["NWH"].ToString() </h3>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Session["BannerMessage"] as string))
+        {
+            <div class="example1">
+                <h3>@Session["BannerMessage"].ToString() </h3>
+            </div>
+        }
+        <div class="row">
+            <div class="column">
+                <div id="divlogo" class="clslogo">
+                    <img src="~/Images/colour-my-space-logo.jpg" style="height:275px;width:450px;margin-top:30px;" />
+
+                    <a href="https://www.youtube.com/channel/UCpGFO8B8ps6eKHFxzbURUUQ" target="_blank" style="float:left;margin-left: 30px;margin-right: 5px;margin-top:5px;font-size:small;">
+                        <img src="~/Images/VideoImg.png" style="height:70px;width:70px;margin-top:0px;" />
+                    </a>
+                    <a href="https://www.pexels.com/photo/couple-painting-the-wall-white-7218684/" target="_blank" style="float:left;margin-left: 3px;margin-right: 5px;margin-top:5px;font-size:small;">
+                        <img src="~/Images/PhotoImg.png" style="height:50px;width:50px;margin-top:10px;" />
+                    </a> <br />
+                    <a href="https://www.nerolac.com/" target="_blank" style="float:left;margin-left: 180px;margin-right: 15px;margin-top:5px;font-size:small;">Visit Our WebSite</a>
+
+
+                </div>
+            </div>
+            <div class="column">
+                <div class="d-flex justify-content-center h-100">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>MyVizDLR Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="input-group form-group">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Login ID" id="UserId" style="height:38px;"/>
+
+                                </div>
+                                <br />
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                    </div>
+                                    <input type="password" class="form-control" placeholder="Password" id="Password" style="height:38px;width:237px" />
+                                    <div class="input-group-append">
+                                        <button id="show_password" class="btn btn-primary" type="button" style="background-color: white;height:38px; border-radius: 0.25rem;">
+                                            <span class="fa fa-eye-slash icon" style="color:black;"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="align-items-center remember" style="float:left; margin-top:10px;">
+                                    <P style="font-size:small;">Logging in for the 1st time? If so, Your Login ID is also your password.</P>
+                                </div>
+                                <div>
+                                    <div class="align-items-center remember" style="float:left; margin-top:10px;"><a href="~/Login/Forgotpwd"><P style="font-size:small;color:gold;">Forgot Password?</P></a></div>
+                                    <input type="submit" style="float:right;margin-left: 50px;margin-right: 45px;margin-top:10px;" value="Login" class="btn float-right login_btn" id="BtnLogin">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="content">
+                <img src="~/Images/PREVIEW UNIT-01.png" />
+            </div>
+        </div>
+
+    </div>
+</form>

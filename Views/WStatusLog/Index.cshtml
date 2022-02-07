@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<NerolacPreviewApp.Models.WStatusLog>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+
+<h2>Index</h2>
+<html>
+<head>
+</head>
+<body>
+    <div id='myModal' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Status Log Details</h4>
+    </div>
+    <div class="modal-body">
+        <table class="tablemodel">
+            <thead>
+                <tr>
+                    <th>ProjectID</th>
+                    <th>Customer</th>
+                    <th>WorkStatus</th>
+                    <th>AssignedTo</th>
+                    <th>StatusDate</th>
+                    <th>TSO</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssignedTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.M_Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+    
+</body>
+</html>
+
+
+

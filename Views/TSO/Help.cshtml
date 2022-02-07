@@ -1,0 +1,156 @@
+﻿@model IEnumerable<NerolacPreviewApp.Models.Help>
+
+@{
+    ViewBag.Title = "Help";
+
+}
+
+<h2 style="color:red;font-weight:bold;font-size:20px;margin-left:15px;">Help</h2>
+<style>
+
+    .tb4 td, .tb4 th {
+        padding: 10px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .tb4 th {
+        color: green;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .tb4 td {
+        padding: 10px;
+        padding-left: 35px;
+        font-size: 15px;
+        font-weight: bold;
+        color: darkblue;
+    }
+
+    #blink {
+        font-size: 8px;
+        font-weight: bold;
+        color: #2d38be;
+        transition: 0.5s;
+    }
+</style>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChapterNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MainTitle)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.SubTitle)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Shortdescription)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.DetailsSet1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailsSet2)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Attachment)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Tags)
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        var sdate = Convert.ToDateTime(item.n);
+        var ssdate = sdate.AddDays(-7);
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChapterNumber)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MainTitle)
+
+
+
+                @if (Convert.ToDateTime(item.c_date) <= Convert.ToDateTime(item.n)
+                    && Convert.ToDateTime(item.c_date) >= Convert.ToDateTime(ssdate))
+                {
+
+                    <span><img src="~/Images/tnew5_e0.gif" alt="this slowpoke moves" width="30" /></span>
+                }
+
+
+
+
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.SubTitle)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Shortdescription)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.DetailsSet1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DetailsSet2)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Attachment)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Tags)
+                </td>*@
+            <td>
+                @Html.ActionLink("Download", "DownloadFile", new { fileName = item.Attachment })
+            </td>
+        </tr>
+    }
+
+</table>
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert('@TempData["Message"]');
+            };
+    </script>
+}
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        @if (Session["Userlevel"].ToString() == "1")
+        {
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Index", "TSODashboard")'">
+                <span class="glyphicon glyphicon-backward"></span>&nbsp;Back to Dashboard
+            </button>
+        }
+        else
+        {
+            <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("AllLevelsDashboard", "TSODashboard")'">
+                <span class="glyphicon glyphicon-backward"></span>&nbsp;Back to Dashboard
+            </button>
+        }
+    </div>
+</div>
+
+@section Scripts
+        {
+    <script type="text/javascript">
+
+        var blink = document.getElementById('blink');
+        setInterval(function () {
+            blink.style.opacity = (blink.style.opacity == 0 ? 1 : 0);
+        }, 1500);
+        $(document).ready(function () {
+            $(".btn-warning").mouseover(function () {
+                $(this).attr("title", "Go to Dashboard");
+            });
+        });
+    </script>
+}

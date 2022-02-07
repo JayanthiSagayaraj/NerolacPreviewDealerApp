@@ -1,0 +1,84 @@
+﻿@model NerolacPreviewApp.Models.BizStatus
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+<div class="container" style="margin-top:60px">
+
+
+    <table class="table table-responsive">
+        <tr>
+            <th>Customer Name</th>
+            <th>Business Status</th>
+            <th>Status Date</th>
+            <th>Status Reason</th>
+            <th></th>
+        </tr>
+        <tbody>
+
+            @if (ViewBag.biz != null)
+            {
+
+                foreach (var item in ViewBag.biz)
+                {
+                    <tr id="@item.ProjectId">
+                        <td>@item.CustomerName</td>
+                        <td>@item.BStatus</td>
+                        <td>@item.StatusDate.ToString("ddd, dd MMM yyy hh:mm tt")</td>
+                        <td>@item.StatusReason</td>
+                        <td><a href="#" class="btn btn-success" onclick="BizStatus(@item.ProjectId)"><i class="glyphicon glyphicon-pencil"></i> Update BizStatus</a> </td>
+
+                    </tr>
+
+                }
+            }
+        </tbody>
+    </table>
+
+    <input type="button" class="btn btn-primary" value="Let's Go to Dashboard!" onclick="location.href='@Url.Action("Index", "TSODashboard")'" />
+
+
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                    <h3 class="modal-title" style="color:red;font-weight:bold;font-size:20px;margin-left:25px;">MyViz6 - BizStatus Update</h3>
+                </div>
+                <div class="modal-body" id="myModalBodyDiv1">
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <input type="hidden" id="hiddenProjectId" />
+
+
+</div>
+ 
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+
+        var BizStatus = function (projectid) {
+           
+            var url = "../TSO/BizStatus?proId=" + projectid;
+           
+            $("#myModalBodyDiv1").load(url, function () {
+                $("#myModal1").modal("show"); 
+            }) 
+        }
+    </script>
+ 

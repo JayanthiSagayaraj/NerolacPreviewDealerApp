@@ -1,0 +1,396 @@
+﻿
+@model NerolacPreviewApp.Models.TSODashboardDetails
+@{
+    ViewBag.Title = "TSO Dashboard Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+<title> MyViz4 - Project Info </title>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        body {
+            margin-top: 40px;
+            background: #eee;
+        }
+
+        .page-todo .tasks {
+            background: #fff;
+            padding: 0;
+            border-right: 1px solid #d1d4d7;
+            margin: -30px 15px -30px -15px
+        }
+
+        .page-todo .task-list {
+            padding: 30px 15px;
+            height: 100%
+        }
+
+        .page-todo .graph {
+            height: 100%
+        }
+
+        .page-todo .priority.high {
+            background: skyblue;
+            margin-bottom: 1px
+        }
+
+            .page-todo .priority.high span {
+                background: skyblue;
+                padding: 2px 10px;
+                color: #fff;
+                display: inline-block;
+                font-size: 12px
+            }
+
+        .page-todo .priority.medium {
+            background: #fff0ab;
+            margin-bottom: 1px
+        }
+
+            .page-todo .priority.medium span {
+                background: #f8cb00;
+                padding: 2px 10px;
+                color: #fff;
+                display: inline-block;
+                font-size: 12px
+            }
+
+        .page-todo .priority.low {
+            background: #cfedda;
+            margin-bottom: 1px
+        }
+
+            .page-todo .priority.low span {
+                background: #4dbd74;
+                padding: 2px 10px;
+                color: #fff;
+                display: inline-block;
+                font-size: 12px
+            }
+
+        .page-todo .task {
+            border-bottom: 1px solid #e4e5e6;
+            margin-bottom: 1px;
+            position: relative
+        }
+
+            .page-todo .task .desc {
+                display: inline-block;
+                width: 100%;
+                padding: 10px 10px;
+                font-size: 12px
+            }
+
+                .page-todo .task .desc .title {
+                    font-size: 18px;
+                    margin-bottom: 5px
+                }
+
+            .page-todo .task .time {
+                display: inline-block;
+                width: 15%;
+                padding: 10px 10px 10px 0;
+                font-size: 12px;
+                text-align: right;
+                position: absolute;
+                top: 0;
+                right: 0
+            }
+
+                .page-todo .task .time .date {
+                    font-size: 18px;
+                    margin-bottom: 5px
+                }
+
+            .page-todo .task.last {
+                border-bottom: 1px solid transparent
+            }
+
+            .page-todo .task.high {
+                border-left: 2px solid #f86c6b
+            }
+
+            .page-todo .task.medium {
+                border-left: 2px solid #f8cb00
+            }
+
+            .page-todo .task.low {
+                border-left: 2px solid #4dbd74
+            }
+
+        .page-todo .timeline {
+            width: auto;
+            height: 100%;
+            margin: 20px auto;
+            position: relative
+        }
+
+            .page-todo .timeline:before {
+                position: absolute;
+                content: '';
+                height: 100%;
+                width: 4px;
+                background: #d1d4d7;
+                left: 50%;
+                margin-left: -2px
+            }
+
+        .page-todo .timeslot {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            margin: 5px 0
+        }
+
+            .page-todo .timeslot .task {
+                position: relative;
+                width: 44%;
+                display: block;
+                border: none;
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                box-sizing: content-box
+            }
+
+                .page-todo .timeslot .task span {
+                    border: 2px solid #63c2de;
+                    background: #e1f3f9;
+                    padding: 5px;
+                    display: block;
+                    font-size: 11px
+                }
+
+                    .page-todo .timeslot .task span span.details {
+                        font-size: 16px;
+                        margin-bottom: 10px
+                    }
+
+                    .page-todo .timeslot .task span span.remaining {
+                        font-size: 14px
+                    }
+
+                    .page-todo .timeslot .task span span {
+                        border: 0;
+                        background: 0 0;
+                        padding: 0
+                    }
+
+                .page-todo .timeslot .task .arrow {
+                    position: absolute;
+                    top: 6px;
+                    right: 0;
+                    height: 20px;
+                    width: 20px;
+                    border-left: 12px solid #63c2de;
+                    border-top: 12px solid transparent;
+                    border-bottom: 12px solid transparent;
+                    margin-right: -18px
+                }
+
+                    .page-todo .timeslot .task .arrow:after {
+                        position: absolute;
+                        content: '';
+                        top: -12px;
+                        right: 3px;
+                        height: 20px;
+                        width: 20px;
+                        border-left: 12px solid #e1f3f9;
+                        border-top: 12px solid transparent;
+                        border-bottom: 12px solid transparent
+                    }
+
+            .page-todo .timeslot .icon {
+                position: absolute;
+                border: 2px solid #d1d4d7;
+                background: #2a2c36;
+                -webkit-border-radius: 50em;
+                -moz-border-radius: 50em;
+                border-radius: 50em;
+                height: 30px;
+                width: 30px;
+                top: 0;
+                left: 50%;
+                margin-left: -17px;
+                color: #fff;
+                font-size: 14px;
+                line-height: 30px;
+                text-align: center;
+                text-shadow: none;
+                z-index: 2;
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                box-sizing: content-box
+            }
+
+            .page-todo .timeslot .time {
+                background: #d1d4d7;
+                position: absolute;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+                top: 1px;
+                left: 50%;
+                padding: 5px 10px 5px 40px;
+                z-index: 1;
+                margin-top: 1px
+            }
+
+            .page-todo .timeslot.alt .task {
+                margin-left: 56%;
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                box-sizing: content-box
+            }
+
+                .page-todo .timeslot.alt .task .arrow {
+                    position: absolute;
+                    top: 6px;
+                    left: 0;
+                    height: 20px;
+                    width: 20px;
+                    border-left: none;
+                    border-right: 12px solid #63c2de;
+                    border-top: 12px solid transparent;
+                    border-bottom: 12px solid transparent;
+                    margin-left: -18px
+                }
+
+                    .page-todo .timeslot.alt .task .arrow:after {
+                        top: -12px;
+                        left: 3px;
+                        height: 20px;
+                        width: 20px;
+                        border-left: none;
+                        border-right: 12px solid #e1f3f9;
+                        border-top: 12px solid transparent;
+                        border-bottom: 12px solid transparent
+                    }
+
+            .page-todo .timeslot.alt .time {
+                top: 1px;
+                left: auto;
+                right: 50%;
+                padding: 5px 40px 5px 10px
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container page-todo bootstrap snippets bootdeys">
+        <div class="col-sm-12 tasks" style="font-weight:bold;">
+            <div class="task-list" style="background: #fff;">
+                <h3 style="display:inline;">MyViz4 - Project Info</h3>
+               
+                    <p style="float:right;display:inline"><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+               
+                <div class="priority high"><span>Project Details</span></div>
+                <div class="task high">
+                    <div class="desc">
+                        <div style="font-weight:100;"> ID : <b>@Html.DisplayFor(Model => Model.ProjectID)</b>, Name : <b>@Html.DisplayFor(Model => Model.ProjectName)</b>, Value : <b>@Html.DisplayFor(Model => Model.ProjectValue)</b> , SiteAddress : <b>@Html.DisplayFor(Model => Model.SiteAddress)</b> ,Location  : <b>@Html.DisplayFor(Model => Model.Location)</b>, Submittedby :<b>@Html.DisplayFor(Model => Model.C_ID) - @Session["UserName"].ToString() </b>,On :  <b>@Model.C_Date.ToString("ddd, dd MMM yyy hh:mm tt") </b></div>
+                    </div>
+                </div>
+                <div class="task high">
+                    <div class="desc">
+                        <div style="font-weight:100;">Workstatus : <b> @Html.DisplayFor(Model => Model.Wstatus) </b>,Statusdate  : <b> @Model.WstatusDate.ToString("ddd, dd MMM yyy hh:mm tt") </b> </div>
+                    </div>
+                </div>
+                <div class="task high">
+                    <div class="desc">
+                        <div style="font-weight:100;">
+                           Depot  : <b>@Html.DisplayFor(Model => Model.Depot)</b>, DepotName :  <b>@Html.DisplayFor(Model => Model.DepotName)</b><br /><br />DepotAddress:  <b>@Model.DepotAd1, @Model.DepotAd2,@Model.DepotAd3, @Model.DepotAd4,@Model.DepotPinCode</b><br /><br />EmailId  : <b> @Model.DepotEmailId</b>,ContactName  :  <b>@Model.DepotContactName</b>, ContactNo  :  <b>@Model.DepotContactNo</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="task high last">
+                    <div class="desc">
+                        <div class="title">Options</div>
+                        <div style="font-weight:100;">
+                            @Html.DisplayFor(Model => Model.VizOption), @Html.DisplayFor(Model => Model.IorEorMS) ,
+                            @if (Model.FreshPainting == "Yes")
+                            {
+                                <b>FreshPainting</b>
+                            }
+                            else
+                            {
+                                <b>RePainting</b>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="priority medium"><span>Customer Details</span></div>
+
+                <div class="task medium">
+                    <div class="desc">
+                        <div style="font-weight:100;"> Name : <b>@Html.DisplayFor(Model => Model.CustomerName)</b> , EmailID : <b>@Html.DisplayFor(Model => Model.CustomerEMailId)</b> , ContactNo : <b>@Html.DisplayFor(Model => Model.CustomerContactNo)</b>  </div>
+                    </div>
+                </div>
+
+
+                <div class="priority low"><span>Image Details</span></div>
+
+                <div class="task low">
+                    <div class="desc">
+                        <div class="title">Source Image Files</div>
+                        <div style="font-weight:100;">
+                            File1                  : <b>@Html.DisplayFor(Model => Model.ImageFileName1)</b> <br /><br />
+                            File2                  : <b>@Html.DisplayFor(Model => Model.ImageFileName2)</b> <br /><br />
+                            File3               : <b>@Html.DisplayFor(Model => Model.ImageFileName3)</b> <br /><br />
+                            Size (KB)                 : <b>@Html.DisplayFor(Model => Model.FileSize)</b> <br /><br />
+                            Resolution            : <b>@Html.DisplayFor(Model => Model.Resolution)</b> <br /><br />
+                            Preview Centre Remarks : <b>@Html.DisplayFor(Model => Model.InSyComments) </b>
+                        </div>
+                    </div>
+                </div>
+                <div class="task low"> ,
+                    <div class="desc">
+                        <div class="title">Selected Source Image</div>
+                        <div style="font-weight:100;"><b>@Html.DisplayFor(Model => Model.SIOption) </b>, FileName : <b>@Html.DisplayFor(Model => Model.SIFileName)</b>, CaseID : <b>@Html.DisplayFor(Model => Model.CaseID)</b> </div>
+                    </div>
+                </div>
+                <div class="task low">
+                    <div class="desc">
+                        <div class="title"> Preview 1</div>
+                        <div style="font-weight:100;">Body : <b>@Html.DisplayFor(Model => Model.CPBody1)</b> ,  Border  : <b>@Html.DisplayFor(Model => Model.CPBorder1)</b>,  Highlight : <b>@Html.DisplayFor(Model => Model.CPHighlight1)</b> </div>
+                    </div>
+                </div>
+                <div class="task low">
+                    <div class="desc">
+                        <div class="title"> Preview 2</div>
+                        <div style="font-weight:100;">Body : <b>@Html.DisplayFor(Model => Model.CPBody2)</b> ,  Border  : <b>@Html.DisplayFor(Model => Model.CPBorder2)</b>,  Highlight : <b>@Html.DisplayFor(Model => Model.CPHighlight2)</b> </div>
+                    </div>
+                </div>
+                <div class="task low">
+                    <div class="desc">
+                        <div class="title"> Preview 3</div>
+                        <div style="font-weight:100;">Body : <b>@Html.DisplayFor(Model => Model.CPBody3)</b> ,  Border  : <b>@Html.DisplayFor(Model => Model.CPBorder3)</b>,  Highlight : <b>@Html.DisplayFor(Model => Model.CPHighlight3)</b> </div>
+                    </div>
+                </div>
+                <div class="task medium last">
+                    <div class="desc">
+                        <div class="title">Dealer Details</div>
+                        <div style="font-weight:100;"> Name : <b>@Html.DisplayFor(Model => Model.DealerName)</b> , Code : <b>@Html.DisplayFor(Model => Model.DealerSAPCode)</b>   </div>
+                    </div>
+                </div>
+                <div class="task medium last">
+                    <div class="desc">
+                        <div class="title">Special Request</div>
+                        <div style="font-weight:100;"> <b>@Html.DisplayFor(Model => Model.CPSplRequest)</b> </div>
+                    </div>
+                </div>
+               
+                    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Index", "TSODashboard")'">
+
+                        <span class="glyphicon glyphicon-backward"></span>&nbsp;Back to Dashboard
+                    </button>
+             
+
+                @*<p><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard</b></a></p>*@
+                @*<input type="button" class="btn btn-link" value="Back" onclick="location.href='@Url.Action("Index", "TSODashboard")'" />*@
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

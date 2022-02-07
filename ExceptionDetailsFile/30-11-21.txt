@@ -1,0 +1,96 @@
+-----------Exception Details on  30-11-2021 12:22:48 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 30-11-2021 12:22:48 PM
+
+Error Line No : ine 355
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : Result consisted of more than one row
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  30-11-2021 12:24:00 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 30-11-2021 12:24:00 PM
+
+Error Line No : ine 355
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : Result consisted of more than one row
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  30-11-2021 12:31:15 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 30-11-2021 12:31:15 PM
+
+Error Line No : ine 355
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : You can't specify target table 'fromtso' for update in FROM clause
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  30-11-2021 12:40:26 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 30-11-2021 12:40:26 PM
+
+Error Line No : ine 355
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : You can't specify target table 'fromtso' for update in FROM clause
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

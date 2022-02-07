@@ -1,0 +1,46 @@
+﻿
+
+<a href="#" class="btn btn-success" onclick="statsCount()"><i class="glyphicon glyphicon-pencil"></i> Show Stats </a>
+<div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false" style="width:800px;margin-left:285px;margin-top:100px;">
+    <div class="modal-dialog" style="width:550px;">
+        <div class="modal-content" style="width:700px;">
+            <div class="modal-header">
+                <a href="#" id="clsBtn" class="close" data-dismiss="modal" style="color:red;margin-left:255px;">&times;</a>
+
+            </div>
+            <div class="modal-body" id="myModalBodyDiv1">
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#clsBtn").mouseover(function () {
+            $(this).attr("title", "Close");
+        });
+    });
+        var statsCount = function () {
+
+            var url = '@Url.Action("statsCount", "TSO")';
+            $("#myModalBodyDiv1").load(url, function () {
+                $("#myModal1").modal("show");
+                $("#clsBtn").mouseover(function () {
+                    $(this).attr("title", "Close");
+                });
+            })
+        }
+
+</script>

@@ -1,0 +1,24 @@
+-----------Exception Details on  20-01-2022 04:34:32 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 20-01-2022 04:34:32 PM
+
+Error Line No : ine 374
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : Reading from the stream has failed.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+

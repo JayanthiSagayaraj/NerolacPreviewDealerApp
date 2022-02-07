@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Preview Album";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyViz Previews</h2>
+<html>
+<head>
+
+</head>
+<body>
+    <div>
+        <p>ID: @ViewBag.ProjectID    (@ViewBag.ProjectName)  (@ViewBag.vizoption)</p>
+        <p style="display:inline;">
+            <a href="~/TSODashboard/LaunchPreview?Id=@ViewBag.ProjectID" style="color:red;">Click here to launch the Visualiser</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            @*<span style="font-size:12px;">and checkout own choice of colours</span>*@
+        </p>
+        <br /><br />
+        <P>Or</P>
+        <br />
+        <p style="font-size:12px;">Download the Softcopy Album (if ready) of the Colour Preview Album</p>
+        <p>
+            <a href="~/TSODashboard/DownloadOption1?Id=@ViewBag.ProjectID">Option 1</a> &nbsp;&nbsp;
+            <a href="~/TSODashboard/DownloadOption2?Id=@ViewBag.ProjectID">Option 2</a> &nbsp;&nbsp;
+            <a href="~/TSODashboard/DownloadOption3?Id=@ViewBag.ProjectID">Option 3</a>
+        </p><br />
+
+       
+        
+        @*<P style="color:red;">&nbsp;&nbsp;
+            <span>
+            and checkout own choice of colours
+            </span></P>
+
+
+            <p style="display:inline;"><u>
+        Other contents Return Button and below it remain same*@
+
+        @*<p>
+        Other contents Return Button and below it remain same
+        </p>*@
+
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Index", "TSODashboard")'">
+            <span class="glyphicon glyphicon-backward"></span>&nbsp;Return
+        </button>
+
+        <br />
+        <br />
+        <div style="font-size:11px;">
+           <p> Help:</p>
+           <p> <span style="color:red;">Visualiser:</span> The Software that is launched from here, gives numerous colour options and has several other features for use on a raw photo image or on a Photoshopped image</p>
+            <p><span style="color:red;">On the Spot Visualisation : </span>( Instant Visualisation) – Use this to check out colour choices without waiting</p>
+            <p>In On the Spot Visualisation,  after Colours are applied, remember to prepare the PDF, so that it can be downloaded later.</p>
+            <p><span style="color:red;">Professional Preview: </span>Visualisation on a Photoshopped image</p>
+            <p><span style="color:red;">Softcopy Album:  </span>After the colours are applied, an album is prepared and can be downloaded as a PDF.</p>
+            <!--<p>Each option will be downloaded as 1 Page PDF  to your local folder.</p>
+    <p>Own visualisation can be done in just 3 steps - (Select colour, Select area , Click).</p>-->
+            @* <p>For more details read the documentation available in the Help menu.</p>*@
+        </div>
+    </div>
+</body>
+</html>

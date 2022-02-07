@@ -1,0 +1,230 @@
+﻿@model PagedList.IPagedList<NerolacPreviewApp.Models.Active_InActiveUserDetails>
+
+@{
+    ViewBag.Title = "Active_InActiveUserDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string currentFilter = ViewBag.CurrentFilter;
+    string currentSort = ViewBag.CurrentSort;
+    if (string.IsNullOrEmpty(currentSort))
+    {
+        currentSort = "ProjectID_desc";
+    }
+}
+@using PagedList.Mvc
+<!DOCTYPE html>
+
+<html>
+<head>
+    <div class="wrapper">
+        <meta name="viewport" content="width=device-width" />
+        <title> MyViz - Myiz Usage </title>
+        <link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+</head>
+<body>
+    <div class="col-md-1">
+
+    </div>
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-6" style="width:100%;">
+            @if (Session["Userlevel"].ToString() == "1")
+            {
+                <p style="float:right;display:inline"><a href='@Url.Action("Index", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+            }
+            else
+            {
+                <p style="float:right;display:inline"><a href='@Url.Action("AllLevelsDashboard", "TSODashboard")'><b>Back to Dashboard</b></a></p>
+            }
+
+            <div class="search-box">
+                <form class="form-inline">
+
+                    <div class="form-group">
+                        <input type="text" name="q" value="@ViewBag.searchQuery" class="search-text form-control" placeholder="Search..." title="Search relevant details in the grid" data-toggle="tooltip" id="searchtxt" />
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary" id="btnClear" onserverclick="Is" runat="server">Clear</button>
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="@Url.Action("Index_Post","TSO")">Export to excel</a>
+                    @*<button type="submit" class="btn btn-primary" id="excel">Export to Excel</button>*@
+
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+
+
+                </form>
+            </div>
+        </div>
+        </br>
+        <div class="col-md-1">
+
+        </div>
+    </div>
+    
+    <div class="row" style="margin-top:25px">
+       <p style="padding-left: 15px; font-size: 12px;">Sort is possible on blue title.</p>
+        <div class="col-md-12">
+            <div class="panel panel-primary list-panel" style="display: inline-block; width: 100%;" id="list-panel">
+                <div class="panel-heading list-panel-heading" style="width:100%;">
+                    <h1 class="panel-title list-panel-title">MyViz Usage</h1>
+                </div>
+                <div class="panel-body" style="width: 100%;position: relative">
+                    @*<div style="width: 100%; overflow: auto; overflow-x: visible; margin-top: 20px; ">*@
+                    <div id="dvData" style="width: 100%; height:400px;">
+                        <div style="width:100%;height:400px;overflow:scroll;">
+                            <table id="assets-data-table" class="table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            @Html.ActionLink("ID", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.IDSortParam))
+                                            @Html.SortIdentifier(currentSort, "ID")
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            @Html.ActionLink("Name", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.NameSortParam))
+                                            @Html.SortIdentifier(currentSort, "Name")
+                                        </th>
+
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            @Html.ActionLink("Status", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.StatusSortParam))
+
+                                            @Html.SortIdentifier(currentSort, "Status")
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;" title="Project Count">
+                                            @Html.ActionLink("Pr Ct", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.ProjectcountSortParam))
+
+                                            @Html.SortIdentifier(currentSort, "ProjectCount")
+                                        </th>
+
+                                        <th style="white-space: nowrap; position: sticky;" title="LatestProjectID">
+
+                                            @Html.ActionLink("LPID", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.LPIDSortParam))
+                                            @Html.SortIdentifier(currentSort, "LastProjectID")
+
+                                        </th>
+                                        <th style="white-space: nowrap;" title="LatestProjectDate">
+                                            LPDt
+
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            @Html.ActionLink("Designation", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.DesignationSortParam))
+                                            @Html.SortIdentifier(currentSort, "Designation")
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            User EMail
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">User ContactNo</th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            Region
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            DepotCode
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            DepotName
+                                        </th>
+
+                                        <th style="white-space: nowrap; position: sticky;">
+
+                                            @Html.ActionLink("ASM ID", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.ASMIDSortParam))
+                                            @Html.SortIdentifier(currentSort, "ASMID")
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            @Html.ActionLink("ASM Name", "Active_InActiveUserDetails", Request.QueryString.ToRouteValueDictionary("sortOrder", (string)ViewBag.ASMIDSortParam))
+                                            @Html.SortIdentifier(currentSort, " ASMName")
+
+                                        </th>
+                                        <th style="white-space: nowrap; position: sticky;">
+                                            ASM Contact
+                                        </th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var asset in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            <nobr>
+                                                @asset.ID
+                                            </nobr>
+                                        </td>
+                                        <td><nobr>@asset.Name</nobr></td>
+                                        <td><nobr>@asset.Status</nobr></td>
+
+                                        <td><nobr>@asset.ProjectCount</nobr></td>
+                                        <td><nobr>@asset.LastProjectID</nobr></td>
+                                        <td><nobr>@asset.LastProjectDate</nobr></td>
+                                        <td><nobr>@asset.Designation</nobr></td>
+                                        <td><nobr>@asset.EmailID</nobr></td>
+
+                                        <td><nobr>@asset.ContactNo</nobr></td>
+                                        <td><nobr>@asset.Region</nobr></td>
+                                        <td><nobr>@asset.Depotcode</nobr></td>
+                                        <td><nobr>@asset.Depotname</nobr></td>
+                                        <td><nobr>@asset.ASMID</nobr></td>
+                                        <td><nobr>@asset.ASMName</nobr></td>
+
+                                        <td><nobr>@asset.ASMContact</nobr></td>
+
+
+
+
+                                    </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @*@if (Model.PageCount > 1)
+                {
+                    <div class="pager">
+                        @Html.PagedListPager(Model, page => Url.Action("Active_InActiveUserDetails", new
+                                       {
+                                           page,
+                                           sortOrder = ViewBag.currentSort,
+                                           q = ViewBag.searchQuery
+                                       }))
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                    </div>
+                }*@
+            </div>
+        </div>
+        @*</div>*@
+    </div>
+    @section Scripts
+        {
+
+        <script type="text/javascript">
+                $("#btnClear").click(function () {
+                    $("#searchtxt").val('');
+                    $("#btnClear").val("");
+                    window.location.href = '@Url.Action("Active_InActiveUserDetails", "TSO")';
+                });
+        </script>
+    }
+
+</body>
+</html>
+
+
+
+

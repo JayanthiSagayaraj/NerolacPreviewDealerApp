@@ -1,0 +1,91 @@
+﻿@model IEnumerable<NerolacPreviewApp.Models.Feedback>
+
+@{
+    ViewBag.Title = " Feedback History";
+    Layout = null;
+}
+
+<h2 style="color:red;font-weight:bold;font-size:20px;margin-left:15px;">History</h2>
+<style>
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 5px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: 1px solid #ddd;
+    }
+    .tb3 td, .tb3 th {
+        padding: 10px;
+        width: 100px;
+        text-align: center;
+        border: 0px;
+    }
+
+    .tb3 th {
+        font-size: 12px;
+        text-align: center;
+        border: 0px;
+    }
+
+    .tb3 td {
+        padding: 10px;
+        padding-left: 35px;
+        font-size: 12px;
+        border: 0px;
+    }
+
+  
+    .table-bordered {
+        /* border: 1px solid #ddd; */ border: 0px;
+    }
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            /* border: 1px solid #ddd; */
+            /* border: 0px; */
+        }
+</style>
+ 
+<table class="table table-bordered breadcrumb tb3">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TSOId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TSOInput)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReplyGiven)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RDate)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Date)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TSOId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProjectName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.TSOInput)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ReplyGiven)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RDate)
+    </td>
+</tr>
+}
+
+</table>

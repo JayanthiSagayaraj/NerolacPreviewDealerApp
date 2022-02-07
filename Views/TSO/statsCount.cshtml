@@ -1,0 +1,118 @@
+﻿@model IEnumerable<NerolacPreviewApp.Models.Stats>
+
+@{ Layout = null; }
+<style>
+
+    .tbl1 td, .tbl1 th {
+        padding: 10px;
+      
+    }
+
+    .tbl1 th {
+        color: darkgreen;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .tbl1 td {
+        padding: 10px;
+        padding-left: 35px;
+        font-size: 12px;
+        font-weight: bold;
+        color: darkblue;
+        text-align:center;
+    }
+
+    .modal {
+        bottom: auto;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+</style>
+<h2 style="color:red;font-weight:bold;font-size:18px;margin-left:55px;">MyViz13 - Statistics</h2>
+<br />
+<table border="1" cellpadding="6" class="table-responsive tbl1" style="table-layout:fixed;">
+
+    @foreach (var item in Model)
+    {
+
+<thead style="background-color:lightblue;">
+
+    <tr>
+        <th> </th>
+        @{ string dates = DateTime.Now.ToString("dd-MM-yyyy");
+                            string yesdates = DateTime.Now.AddDays(-1).ToString("dd-MM-yyyy");
+
+            <th style="text-align:center;">Today(@dates)</th>
+                            <th style="text-align:center;">Yesterday(@yesdates)</th>
+                                            <th style="text-align:center;">Till Date</th> }
+    </tr>
+</thead>
+                <tbody>
+
+                    <tr>
+                        <td style="background-color:lightblue;">
+                            @Html.Label("Projects", new { style = "color:green;" })
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.ProjectsToday)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectsYesterday)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Projects)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:lightblue;">
+                            @Html.Label("TSO Involved", new { style = "color:green;" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TSOInvolvedToday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TSOInvolvedYesterday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TSOInvolved)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:lightblue;">
+                            @Html.Label("Soft Copy Albums", new { style = "color:green;" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SCACountToday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SCACountYesterday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SCACount)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:lightblue;">
+                            @Html.Label("Hard Copy Albums", new { style = "color:green;" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HCACountToday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HCACountYesterday)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HCACount)
+                        </td>
+                    </tr>
+                </tbody>
+}
+
+</table>
+

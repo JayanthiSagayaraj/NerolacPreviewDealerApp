@@ -1,0 +1,112 @@
+﻿@model NerolacPreviewApp.Models.Login
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Forgotpwd</title>
+    <style>
+        body {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #505050;
+            font-family: "Rubik", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1.5;
+            text-transform: none
+        }
+
+        .forgot {
+            background-color: #fff;
+            padding: 12px;
+        }
+
+        .padding-bottom-3x {
+            padding-bottom: 72px !important
+        }
+
+        .card-footer {
+            background-color: #fff
+        }
+
+        .btn {
+            font-size: 13px
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #76b7e9;
+            outline: 0;
+            box-shadow: 0 0 0 0px #28a745
+        }
+    </style>
+</head>
+<body>
+    <div class="container padding-bottom-3x mb-2 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="forgot">
+                    <h2>Forgot your password?</h2>
+                    @*<p>Change your password in three easy steps. This will help you to secure your password!</p>
+                        <ol class="list-unstyled">
+                            <li><span class="text-primary text-medium">1. </span>Enter your EmployeeID below.</li>
+                            <li><span class="text-primary text-medium">2. </span>Our system will send you an Email.</li>
+                            <li><span class="text-primary text-medium">3. </span>Email will contain the password to login.</li>
+                        </ol>*@
+                </div>
+                <form class="card mt-4">
+                    <div class="card-body">
+                        <div class="form-group"> <label for="email-for-pass">Enter your EmployeeID</label> <input class="form-control" type="text" id="email-for-pass" required="" style="width:200px;"><small class="form-text text-muted">Enter the EmployeeID you used during the registration on MyViz. Then we'll email a link to the registered Email address.</small> </div>
+                    </div>
+                    <div> <button class="btn btn-success" type="submit" id="btnNewpwd">Get New Password</button> <button class="btn btn-danger" type="submit" id="btnbacktologin">Back to Login</button> </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#btnNewpwd").click(function () {
+            $('#btnNewpwd').prop('disabled', true);
+            var UserId = $("#email-for-pass").val();
+            if (UserId != "") {
+
+                $.ajax({
+                    url: "@Url.Action("ResetPassword","Login")",
+                    type: 'Post',
+                    dataType: "json",
+                    data: {
+                        jsUserId: UserId
+                    },
+                    success: function (data) {
+                        alert('Request Submitted Successfully!');
+                        window.location.href = '@Url.Action("Index", "Login")';
+                        $('#btnNewpwd').prop('disabled', false);
+                    },
+                    error: function (x, e) {
+                        alert("The call to the server side failed. " + x.responseText);
+                        $('#btnNewpwd').prop('disabled', false);
+                    }
+                });
+
+            }
+            else {
+                alert('Please enter the EmployeeID');
+                $("#email-for-pass").focus();
+                $('#btnNewpwd').prop('disabled', false);
+            }
+        });
+
+        $("#btnbacktologin").click(function () {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                });
+    </script>
+</body>
+</html>

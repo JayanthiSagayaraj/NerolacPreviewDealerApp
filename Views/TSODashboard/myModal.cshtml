@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<NerolacPreviewApp.Models.WStatusLog>
+@{
+    ViewBag.Title = "Project Status Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+
+@*<h2>Project Status Log Details</h2>*@
+@*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>*@
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="height: 0px;"><b>MyViz3 - Project Status Log</b></h5>
+                <button type="button" class="close closeredirect" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @*<th>ProjectName</th>
+                            <th>Customer</th>*@
+                            <th>WorkStatus</th>
+                            <th>StatusDate</th>
+                            @*<th>AssignedTo</th>*@
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+
+                <tr>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkStatus)
+                    </td>
+                    <td>
+                        @item.M_Date.ToString("ddd, dd MMM hh:mm tt")
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.AssignedTo)
+                    </td>*@
+                </tr>
+                    }
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary closeredirect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $("#exampleModal").modal("show");
+        $(".closeredirect").click(function () {
+         
+                                        window.location.href = '@Url.Action("Index", "TSODashboard")';
+                                        
+        });
+    });
+
+</script>
+

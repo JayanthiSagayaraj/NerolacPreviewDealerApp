@@ -1,0 +1,202 @@
+﻿
+@model NerolacPreviewApp.Models.User
+
+
+@{
+    ViewBag.Title = "Nerolite Profile";
+    Layout = null;
+}
+<style>
+    /*.form-control {
+        display: block;
+        width: 40%;
+    }*/
+</style>
+<br />
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal" style="margin-left:25px;">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.UserId)
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-xs-2" })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 65px;", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserContactNo, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 65px;", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.UserContactNo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserEmailId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserEmailId, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 63px;", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.UserEmailId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TSOCount, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TSOCount, new { htmlAttributes = new { @class = "form-control", @style = "margin-left: 62px;", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.TSOCount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        </div>
+    }*@
+
+
+
+
+
+<style>
+    .tbl2 td, .tbl2 th {
+        padding: 10px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .tbl2 th {
+        color: darkgreen;
+        font-size: 15px;
+        text-align: center;
+        height: 35px;
+    }
+
+    .tbl2 td {
+        font-size: 12px;
+        font-weight: bold;
+        color: darkblue;
+        height: 35px;
+    }
+
+    .modal-body {
+        position: relative;
+        padding: 15px;
+        width: 580px;
+    }
+</style>
+<br />
+<table class="table" border="1" cellpadding="5" style="padding-left:15px;margin-left:15px;margin-top:-35px;">
+
+
+    <tbody>
+
+        <tr>
+            <th style="text-align:center;">ID</th>
+            <td>
+                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Name</th>
+            <td>
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Department</th>
+            <td>
+                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Designation</th>
+            <td>
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        @*<tr>
+            <th style="text-align:center;">Location</th>
+            <td>
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">State</th>
+            <td>
+                @Html.EditorFor(model => model.State, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">City</th>
+            <td>
+                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>*@
+        <tr>
+            <th style="text-align:center;">Email ID</th>
+            <td>
+                @Html.EditorFor(model => model.MailID, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Phone</th>
+            <td>
+                @Html.EditorFor(model => model.UserContactNo, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Depot Code</th>
+            <td>
+                @Html.EditorFor(model => model.Depot, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Depot Name</th>
+            <td>
+                @Html.EditorFor(model => model.DepotName, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">Depot Address</th>
+            <td>
+                @Html.EditorFor(model => model.DepotAd1, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                @Html.EditorFor(model => model.DepotAd2, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                @Html.EditorFor(model => model.DepotAd3, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                @Html.EditorFor(model => model.DepotAd4, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:center;">PinCode</th>
+            <td>
+                @Html.EditorFor(model => model.DepotPinCode, new { htmlAttributes = new { @readonly = "readonly", @style = "text-align:center;border-color:white;width:350px;" } })
+            </td>
+        </tr>
+
+
+    </tbody>
+
+</table>
+<p style="font-size:x-small;margin-left:15px;">By default, a Hard Copy Album is couriered to the Depot Address.</p>
+<p style="font-size:x-small;margin-left:15px;">Please inform ‘Support’ immediately if you find any of the information is to be corrected.</p>
+
+
+

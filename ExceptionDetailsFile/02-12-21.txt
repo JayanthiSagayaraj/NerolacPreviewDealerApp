@@ -1,0 +1,144 @@
+-----------Exception Details on  02-12-2021 05:35:42 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 05:35:42 PM
+
+Error Line No : ine 356
+
+Error Message: MySqlException
+
+Exception Type: MySql.Data.MySqlClient.MySqlException
+
+Error Location : Unable to connect to any of the specified MySQL hosts.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  02-12-2021 06:49:00 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 06:49:00 PM
+
+Error Line No : roject)
+
+Error Message: RuntimeBinderException
+
+Exception Type: Microsoft.CSharp.RuntimeBinder.RuntimeBinderException
+
+Error Location : Cannot perform runtime binding on a null reference
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  02-12-2021 07:02:35 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 07:02:35 PM
+
+Error Line No : ine 367
+
+Error Message: JsonReaderException
+
+Exception Type: Newtonsoft.Json.JsonReaderException
+
+Error Location : Error reading JObject from JsonReader. Current JsonReader item is not an object: String. Path '', line 1, position 1113.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  02-12-2021 10:19:42 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 10:19:42 PM
+
+Error Line No : ine 367
+
+Error Message: JsonReaderException
+
+Exception Type: Newtonsoft.Json.JsonReaderException
+
+Error Location : Error reading JObject from JsonReader. Current JsonReader item is not an object: String. Path '', line 1, position 1113.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  02-12-2021 10:33:28 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 10:33:28 PM
+
+Error Line No : ine 367
+
+Error Message: JsonReaderException
+
+Exception Type: Newtonsoft.Json.JsonReaderException
+
+Error Location : Error reading JArray from JsonReader. Current JsonReader item is not an array: String. Path '', line 1, position 1113.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  02-12-2021 11:24:38 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 02-12-2021 11:24:38 PM
+
+Error Line No : roject)
+
+Error Message: JsonSerializationException
+
+Exception Type: Newtonsoft.Json.JsonSerializationException
+
+Error Location : Error converting value "{"code":0,"message":"Success","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJEdWx1eFBsYXlBdXRoVG9rZW4iLCJqdGkiOiI5YjY0Y2E2Mi03YWJiLTQ4ZmUtYTk5Ny1mNjZmOGNhOGEzNzQiLCJpYXQiOiIxMi8yLzIwMjEgNTozNjozNiBQTSIsIklkIjoiRExSMDAxIiwiVXNlck5hbWUiOiJUZXN0IERlYWxlciAwMDEiLCJQcmV2aWV3Q2VudGVyIjoiUFZDMDUiLCJQcmV2aWV3Q2VudGVyRW1haWxJRCI6ImluZm9AaW5ub3ZhdHVzc3lzdGVtcy5jb20iLCJDQ0VtYWlsSUQiOiJpbmZvQGlubm92YXR1c3N5c3RlbXMuY29tIiwiQkNDRW1haWxJRCI6ImluZm9AaW5ub3ZhdHVzc3lzdGVtcy5jb20iLCJDYXNlSUQiOiIqIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsImV4cCI6MTYzODU1Mjk5NiwiaXNzIjoiU21hcnRGYWNlQXV0aFNlcnZlciIsImF1ZCI6IkR1bHV4UGxheUF1dGhDbGllbnQifQ.UevEeVDGe0J-tm52Jyp1RIfEg64zfYzckQw6a6rYBlU","auth":"{\"UserId\":\"DLR001\",\"UserPin\":null,\"UserName\":\"Test Dealer 001\",\"UserEmail\":null,\"PreviewCenterId\":\"PVC05\",\"PreviewCenterEmailId\":\"info@innovatussystems.com\",\"CCEmailId\":\"info@innovatussystems.com\",\"BCCEmailId\":\"info@innovatussystems.com\",\"PreviewCenterStatus\":true}"}" to type 'NerolacPreviewApp.Controllers.TSOController+Root'. Path '', line 1, position 1113.
+
+ Error Page Url: http://localhost:49894/TSO/NewRequestRegistration
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
